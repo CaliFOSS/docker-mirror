@@ -1,6 +1,6 @@
 {
-  "name": "docker-mirror",
-  "description": "A cli tool to automatically copy images from docker hub to private registry",
+  "name": "docmir",
+  "description": "A docker hub mirror application",
   "version": "0.0.0",
   "author": "jeffgarrett @JeffreyGarrett",
   "bin": {
@@ -10,31 +10,43 @@
   "dependencies": {
     "@oclif/command": "^1",
     "@oclif/config": "^1",
-    "@oclif/plugin-help": "^3"
+    "@oclif/plugin-help": "^3",
+    "docker-cli-js": "^2.8.0",
+    "tslib": "^1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
+    "@oclif/test": "^1",
+    "@types/chai": "^4",
+    "@types/mocha": "^5",
+    "@types/node": "^10",
+    "chai": "^4",
     "eslint": "^5.13",
     "eslint-config-oclif": "^3.1",
-    "globby": "^10"
+    "eslint-config-oclif-typescript": "^0.1",
+    "globby": "^10",
+    "mocha": "^5",
+    "nyc": "^14",
+    "ts-node": "^8",
+    "typescript": "^3.3"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "files": [
     "/bin",
+    "/lib",
     "/npm-shrinkwrap.json",
-    "/oclif.manifest.json",
-    "/src"
+    "/oclif.manifest.json"
   ],
   "homepage": "https://github.com/CaliFOSS/docker-mirror",
   "keywords": [
     "oclif"
   ],
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "oclif": {
-    "commands": "./src/commands",
+    "commands": "./lib/commands",
     "bin": "docmir",
     "plugins": [
       "@oclif/plugin-help"
@@ -43,9 +55,10 @@
   "repository": "CaliFOSS/docker-mirror",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "posttest": "eslint .",
-    "prepack": "oclif-dev manifest && oclif-dev readme",
-    "test": "echo NO TESTS",
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif-dev readme && git add README.md"
-  }
+  },
+  "types": "lib/index.d.ts"
 }

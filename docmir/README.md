@@ -1,12 +1,12 @@
-docker-mirror
-=============
+docmir
+======
 
-A cli tool to automatically copy images from docker hub to private registry
+A docker hub mirror application
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/docker-mirror.svg)](https://npmjs.org/package/docker-mirror)
-[![Downloads/week](https://img.shields.io/npm/dw/docker-mirror.svg)](https://npmjs.org/package/docker-mirror)
-[![License](https://img.shields.io/npm/l/docker-mirror.svg)](https://github.com/CaliFOSS/docker-mirror/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/docmir.svg)](https://npmjs.org/package/docmir)
+[![Downloads/week](https://img.shields.io/npm/dw/docmir.svg)](https://npmjs.org/package/docmir)
+[![License](https://img.shields.io/npm/l/docmir.svg)](https://github.com/CaliFOSS/docker-mirror/blob/master/package.json)
 
 <!-- toc -->
 * [Usage](#usage)
@@ -15,11 +15,11 @@ A cli tool to automatically copy images from docker hub to private registry
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g docker-mirror
+$ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docker-mirror/0.0.0 darwin-x64 node-v16.0.0
+docmir/0.0.0 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -28,26 +28,29 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`docmir hello`](#docmir-hello)
+* [`docmir hello [FILE]`](#docmir-hello-file)
 * [`docmir help [COMMAND]`](#docmir-help-command)
+* [`docmir registry [FILE]`](#docmir-registry-file)
 
-## `docmir hello`
+## `docmir hello [FILE]`
 
-Describe the command here
+describe the command here
 
 ```
 USAGE
-  $ docmir hello
+  $ docmir hello [FILE]
 
 OPTIONS
+  -f, --force
+  -h, --help       show CLI help
   -n, --name=name  name to print
 
-DESCRIPTION
-  ...
-  Extra documentation goes here
+EXAMPLE
+  $ docmir hello
+  hello world from ./src/hello.ts!
 ```
 
-_See code: [src/commands/hello.js](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/hello.js)_
+_See code: [src/commands/hello.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/hello.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -65,4 +68,20 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+
+## `docmir registry [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ docmir registry [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/registry.ts)_
 <!-- commandsstop -->

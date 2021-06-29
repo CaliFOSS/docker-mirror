@@ -7,6 +7,8 @@ export class Registry {
   private dockerHubRepo: string;
   private ecrRegistry: string;
   private tagsSynced: [];
+  private dockerUsername;
+  private dockerPassword;
 
 
   constructor(dockerHubRepo: string) {

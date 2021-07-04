@@ -10,7 +10,6 @@ export class ImageRepository {
   private _imageRepoName: string;
   private _dockerRegistryServer = "index.docker.io";
 
-
   constructor(registryServer: string, userName: string, password: string, imageRepoName: string) {
     this._registryServer = registryServer;
     this._userName = userName;

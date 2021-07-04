@@ -4,8 +4,10 @@ export class Registries {
 //****** Private members *******//
   private _imageRepositories: string [];
 
-//***** Constructure and Methods *****//
-  constructor() {
+//***** Constructor and Methods *****//
+  //Takes in a json file and stores the information needed.
+  constructor(file: String) {
+
   }
 
   public printState(){}

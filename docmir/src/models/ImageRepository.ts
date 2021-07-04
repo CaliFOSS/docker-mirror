@@ -1,21 +1,50 @@
 import { Docker, Options } from 'docker-cli-js';
-import * as ecr from 'aws-sdk/clients/ecr';
 
+import axios from 'axios';
+
+// @ts-ignore
+import TagState = ImageRepository.TagState;
+
+interface Tag {
+  tag: string;
+  isSynced: boolean;
+}
 
 export class ImageRepository {
 
-  private _registryServer: string;
-  private _userName: string;
-  private _password: string;
+  private _registryServer: string = "";
+  private _userName: string = "";
+  private _password: string = "";
   private _imageRepoName: string;
-  private _dockerRegistryServer = "index.docker.io";
+  private _managedTags: Tag [];
+  private searchUrl: string;
 
-  constructor(registryServer: string, userName: string, password: string, imageRepoName: string) {
-    this._registryServer = registryServer;
-    this._userName = userName;
-    this._password = password;
+  constructor(imageRepoName: string, registryServer?: string, userName?: string, password?: string ) {
+
     this._imageRepoName = imageRepoName;
+    this.searchUrl = 'https://registry.hub.docker.com/v1/repositories/' + imageRepoName + '/tags';
+    if (registryServer && userName && password){
+      this._registryServer = registryServer;
+      this._userName = userName;
+      this._password = password;
+    }
   }
+
+  public getAvailabletags(){
+    axios.get(this.searchUrl).then( (response)  => {
+      response.data.forEach( (element: { name: any; }) => {
+        console.log(element.name);
+      })
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  public addTag(tag:Tag){
+    this._managedTags.push(tag);
+  }
+
+
 
   public pushImage(): boolean{
 
@@ -58,4 +87,14 @@ export class ImageRepository {
   set imageRepoName(value: string) {
     this._imageRepoName = value;
   }
+
+
+  get managedTags(): Tag[] {
+    return this._managedTags;
+  }
+
+  set managedTags(value: Tag[]) {
+    this._managedTags = value;
+  }
 }
+

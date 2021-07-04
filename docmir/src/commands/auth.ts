@@ -19,11 +19,13 @@ export default class Auth extends Command {
     const {args, flags} = this.parse(Auth)
     let syncController = new SyncController();
 
+    console.log(args.dockerhub, " ", flags.userName, " ", flags.userPassword);
+
     if (args.dockerhub && flags.userPassword && flags.userName) {
       this.log(syncController.authDockerHub(flags.userName, flags.userPassword));
 
     }else if(args.dockerhub){
-      this.log(syncController.whoAmIDocker());
+      this.log(syncController.isLoggedIn());
     }
     else {
       this.log('Nothing to do');

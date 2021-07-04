@@ -28,23 +28,25 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`docmir auth [FILE]`](#docmir-auth-file)
+* [`docmir auth [DOCKERHUB]`](#docmir-auth-dockerhub)
 * [`docmir hello [FILE]`](#docmir-hello-file)
 * [`docmir help [COMMAND]`](#docmir-help-command)
 * [`docmir registry [FILE]`](#docmir-registry-file)
+* [`docmir searchtags [FILE]`](#docmir-searchtags-file)
 
-## `docmir auth [FILE]`
+## `docmir auth [DOCKERHUB]`
 
-describe the command here
+Working with Authentication for Dockerhub and registry
 
 ```
 USAGE
-  $ docmir auth [FILE]
+  $ docmir auth [DOCKERHUB]
 
 OPTIONS
   -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help                       show CLI help
+  -p, --userPassword=userPassword  docker password
+  -u, --userName=userName          docker username
 ```
 
 _See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/auth.ts)_
@@ -101,4 +103,20 @@ OPTIONS
 ```
 
 _See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/registry.ts)_
+
+## `docmir searchtags [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ docmir searchtags [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/searchtags.ts)_
 <!-- commandsstop -->

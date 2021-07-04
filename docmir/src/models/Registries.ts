@@ -1,13 +1,14 @@
+import {ImageRepository} from "./ImageRepository";
 
 export class Registries {
 
 //****** Private members *******//
-  private _imageRepositories: string [];
+
+  private _imageRepositories: ImageRepository [];
 
 //***** Constructor and Methods *****//
   //Takes in a json file and stores the information needed.
   constructor(file: String) {
-
   }
 
   public printState(){}

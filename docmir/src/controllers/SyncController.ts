@@ -8,11 +8,16 @@ export class SyncController {
   //private imageRepository = new ImageRepository();
 
   public authDockerHub(username: string, password: string): string{
-      return(this.dockerUser.dockerLogin(username, password));
+    return(this.dockerUser.dockerLogin(username, password));
   };
 
-  public whoAmIDocker(){
+  public isLoggedIn(){
       return this.dockerUser.dockerLogin();
+  }
+
+  public searchTags(imageName: string){
+    let imageRepo = new ImageRepository(imageName);
+    imageRepo.getAvailabletags();
 
   }
 

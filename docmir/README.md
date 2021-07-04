@@ -28,9 +28,26 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`docmir auth [FILE]`](#docmir-auth-file)
 * [`docmir hello [FILE]`](#docmir-hello-file)
 * [`docmir help [COMMAND]`](#docmir-help-command)
 * [`docmir registry [FILE]`](#docmir-registry-file)
+
+## `docmir auth [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ docmir auth [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/auth.ts)_
 
 ## `docmir hello [FILE]`
 

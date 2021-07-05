@@ -1,21 +1,30 @@
 import {Docker, Options} from 'docker-cli-js';
+import axios from "axios";
 
 
-export class DockerUser {
+
+export class DockerService {
 
   private _userName: string = ""
   private _userPassword: string = "";
-  //initialize docker command line
   private docker = new Docker();
+  private baseSearchUrl = 'https://registry.hub.docker.com/v1/repositories/'
 
-  constructor() {
+  constructor(dockerDependency?: Docker) {
+
+    //dependency injection for tests
+    if (dockerDependency){
+      this.docker = dockerDependency;
+    }
+
+
   }
 
   public dockerLogin(userName?: string, userPassword?: string): string {
 
     let loginWithoutCreds = 'login';
 
-    if (userName && userPassword){
+    if (userName && userPassword) {
       this._userName = userName;
       this._userPassword = userPassword
 
@@ -32,7 +41,7 @@ export class DockerUser {
         //console.log('rejected = ', rejected);
         return rejected;
       })
-    }else{
+    } else {
       this.docker.command(loginWithoutCreds).then((data) => {
         return data.login;
       }, (rejected) => {
@@ -43,6 +52,24 @@ export class DockerUser {
     return "";
   }
 
+  public dockerLogout(): string {
+    this.docker.command('logout').then((data) => {
+      return data;
+    }, (rejected) => {
+      return "Logout Failed.  Please re-login";
+    })
+    return "Failure"
+  }
+
+  public getAllTags(imageName: string){
+    axios.get(this.baseSearchUrl + imageName + '/tags').then( (response)  => {
+      response.data.forEach( (element: { name: any; }) => {
+        console.log(element.name);
+      })
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
   get userName(): string {
     return this._userName;

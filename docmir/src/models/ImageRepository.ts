@@ -1,59 +1,30 @@
-import { Docker, Options } from 'docker-cli-js';
+import {Docker, Options} from 'docker-cli-js';
 
 import axios from 'axios';
 
 // @ts-ignore
 import TagState = ImageRepository.TagState;
-
-interface Tag {
-  tag: string;
-  isSynced: boolean;
-}
+import {RegistryProvider} from "../services/RegistryProvider";
+import {Providers, Tag} from "./types";
 
 export class ImageRepository {
 
   private _registryServer: string = "";
-  private _userName: string = "";
-  private _password: string = "";
+  private registryProvider: Providers = Providers.ecr;
   private _imageRepoName: string;
   private _managedTags: Tag [];
-  private searchUrl: string;
 
-  constructor(imageRepoName: string, registryServer?: string, userName?: string, password?: string ) {
+  constructor(imageRepoName: string, registryServer?: string, registryProvider?: Providers) {
 
     this._imageRepoName = imageRepoName;
-    this.searchUrl = 'https://registry.hub.docker.com/v1/repositories/' + imageRepoName + '/tags';
-    if (registryServer && userName && password){
+    if (registryServer) {
       this._registryServer = registryServer;
-      this._userName = userName;
-      this._password = password;
+    }
+
+    if (registryProvider) {
+      this.registryProvider = registryProvider;
     }
   }
-
-  public getAvailabletags(){
-    axios.get(this.searchUrl).then( (response)  => {
-      response.data.forEach( (element: { name: any; }) => {
-        console.log(element.name);
-      })
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
-  public addTag(tag:Tag){
-    this._managedTags.push(tag);
-  }
-
-
-
-  public pushImage(): boolean{
-
-    return true;
-  };
-
-  public findAllTags(){};
-  public diffState(){};
-  public findImage(){};
 
 
   get registryServer(): string {
@@ -64,21 +35,6 @@ export class ImageRepository {
     this._registryServer = value;
   }
 
-  get userName(): string {
-    return this._userName;
-  }
-
-  set userName(value: string) {
-    this._userName = value;
-  }
-
-  get password(): string {
-    return this._password;
-  }
-
-  set password(value: string) {
-    this._password = value;
-  }
 
   get imageRepoName(): string {
     return this._imageRepoName;
@@ -96,5 +52,10 @@ export class ImageRepository {
   set managedTags(value: Tag[]) {
     this._managedTags = value;
   }
+
+  public addTag(tag: Tag) {
+    this._managedTags.push(tag);
+  }
+
 }
 

@@ -8,11 +8,23 @@ export class Registries {
 
 //***** Constructor and Methods *****//
   //Takes in a json file and stores the information needed.
-  constructor(file: String) {
+  constructor(file?: string) {
   }
 
-  public printState(){}
+  public addRegistry(name: ImageRepository){
+    this._imageRepositories.push(name);
+  }
 
+  public removeRegistry(name: ImageRepository){
+    let imageRepos = this._imageRepositories;
+
+    imageRepos.forEach( (imageRepo, index) => {
+      if( imageRepo.imageRepoName == name ){
+        console.log("Removing registry: ", name);
+        delete this._imageRepositories[index];
+      }
+    } )
+}
 
 //***** Getter and Setters *******//
   get imageRepositories(): string[] {

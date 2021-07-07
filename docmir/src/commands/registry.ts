@@ -16,10 +16,6 @@ export default class Registry extends Command {
   async run() {
     const {args, flags} = this.parse(Registry)
 
-    const name = flags.name ?? 'world'
-    this.log(`hello ${name} from /Users/jeffgarrett/WebstormProjects/docker-mirror/docmir/src/commands/registry.ts`)
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
-    }
+
   }
 }

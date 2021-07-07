@@ -22,6 +22,15 @@ export class SyncController {
 
   }
 
+  public pullImageFromDocker(imageName: string, imageTag?: string): string{
+
+    if(this.dockerService.pullImage(imageName, imageTag)){
+      return "Image is now local"
+    }else{
+      return "Image pull failed"
+    }
+  }
+
   //public searchTags(): string[]{};
   //public pullImage(): void{};
 

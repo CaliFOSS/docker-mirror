@@ -28,9 +28,29 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`docmir auth [DOCKERHUB]`](#docmir-auth-dockerhub)
 * [`docmir hello [FILE]`](#docmir-hello-file)
 * [`docmir help [COMMAND]`](#docmir-help-command)
-* [`docmir registry [FILE]`](#docmir-registry-file)
+* [`docmir pull [FILE]`](#docmir-pull-file)
+* [`docmir registry [ACTION]`](#docmir-registry-action)
+* [`docmir searchtags [IMAGENAME]`](#docmir-searchtags-imagename)
+
+## `docmir auth [DOCKERHUB]`
+
+Working with Authentication for Dockerhub and registry
+
+```
+USAGE
+  $ docmir auth [DOCKERHUB]
+
+OPTIONS
+  -f, --force
+  -h, --help                       show CLI help
+  -p, --userPassword=userPassword  docker password
+  -u, --userName=userName          docker username
+```
+
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/auth.ts)_
 
 ## `docmir hello [FILE]`
 
@@ -69,13 +89,13 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
-## `docmir registry [FILE]`
+## `docmir pull [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ docmir registry [FILE]
+  $ docmir pull [FILE]
 
 OPTIONS
   -f, --force
@@ -83,5 +103,36 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/pull.ts)_
+
+## `docmir registry [ACTION]`
+
+describe the command here
+
+```
+USAGE
+  $ docmir registry [ACTION]
+
+OPTIONS
+  -d, --docker=docker  flags the image pull from docker
+  -f, --force
+  -h, --help           show CLI help
+```
+
 _See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/registry.ts)_
+
+## `docmir searchtags [IMAGENAME]`
+
+describe the command here
+
+```
+USAGE
+  $ docmir searchtags [IMAGENAME]
+
+OPTIONS
+  -h, --help         show CLI help
+  -l, --limit=limit  name to print
+```
+
+_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/searchtags.ts)_
 <!-- commandsstop -->

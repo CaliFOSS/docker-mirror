@@ -6,8 +6,7 @@ export default class Pull extends Command {
 
   static flags = {
     help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    tag: flags.string({char: 't', description: 'name to print'}),
+
   }
 
   static args = [{name: 'image'}, {name: 'tag'}]

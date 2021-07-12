@@ -62,7 +62,11 @@ export class DockerService {
         console.log(element.name);
       })
     }).catch((error) => {
-      console.log(error);
+      if (error.response.status == 404 ){
+        console.log("The registry " + imageName + " was not found on docker hub.")
+      }else{
+        console.log(error);
+      }
     });
   }
 

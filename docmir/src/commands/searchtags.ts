@@ -7,7 +7,7 @@ export default class Searchtags extends Command {
   static flags = {
     help: flags.help({char: 'h'}),
     // flag with a value (-n, --name=VALUE)
-    limit: flags.string({char: 'l', description: 'name to print'}),
+    limit: flags.string({char: 'l', description: 'Limit the number of tags to pull'}),
   }
 
   static args = [{name: 'imagename'}]

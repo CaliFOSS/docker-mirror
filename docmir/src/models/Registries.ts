@@ -4,6 +4,7 @@ export class Registries {
 
 //****** Private members *******//
 
+  // @ts-ignore
   private _imageRepositories: ImageRepository [];
 
 //***** Constructor and Methods *****//
@@ -19,6 +20,7 @@ export class Registries {
     let imageRepos = this._imageRepositories;
 
     imageRepos.forEach( (imageRepo, index) => {
+      // @ts-ignore
       if( imageRepo.imageRepoName == name ){
         console.log("Removing registry: ", name);
         delete this._imageRepositories[index];
@@ -27,11 +29,12 @@ export class Registries {
 }
 
 //***** Getter and Setters *******//
-  get imageRepositories(): string[] {
+  get imageRepositories(): ImageRepository[] {
     return this._imageRepositories;
   }
 
-  set imageRepositories(value: string[]) {
+  // @ts-ignore
+  set imageRepositories(value: ImageRepository[]): ImageRepository {
     this._imageRepositories = value;
   }
 

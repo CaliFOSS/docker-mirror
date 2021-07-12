@@ -19,7 +19,7 @@ $ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docmir/0.0.0 darwin-x64 node-v16.2.0
+docmir/0.1.3 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -29,9 +29,8 @@ USAGE
 # Commands
 <!-- commands -->
 * [`docmir auth [DOCKERHUB]`](#docmir-auth-dockerhub)
-* [`docmir hello [FILE]`](#docmir-hello-file)
 * [`docmir help [COMMAND]`](#docmir-help-command)
-* [`docmir pull [FILE]`](#docmir-pull-file)
+* [`docmir pull [IMAGE] [TAG]`](#docmir-pull-image-tag)
 * [`docmir registry [ACTION]`](#docmir-registry-action)
 * [`docmir searchtags [IMAGENAME]`](#docmir-searchtags-imagename)
 
@@ -50,7 +49,7 @@ OPTIONS
   -u, --userName=userName          docker username
 ```
 
-_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/auth.ts)_
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.3/src/commands/auth.ts)_
 
 ## `docmir hello [FILE]`
 
@@ -70,7 +69,7 @@ EXAMPLE
   hello world from ./src/hello.ts!
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/hello.ts)_
+_See code: [src/commands/hello.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.3/src/commands/hello.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -89,21 +88,19 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
-## `docmir pull [FILE]`
+## `docmir pull [IMAGE] [TAG]`
 
 describe the command here
 
 ```
 USAGE
-  $ docmir pull [FILE]
+  $ docmir pull [IMAGE] [TAG]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
-_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/pull.ts)_
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.3/src/commands/pull.ts)_
 
 ## `docmir registry [ACTION]`
 
@@ -119,7 +116,7 @@ OPTIONS
   -h, --help           show CLI help
 ```
 
-_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/registry.ts)_
+_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.3/src/commands/registry.ts)_
 
 ## `docmir searchtags [IMAGENAME]`
 
@@ -134,5 +131,5 @@ OPTIONS
   -l, --limit=limit  name to print
 ```
 
-_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.0.0/src/commands/searchtags.ts)_
+_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.3/src/commands/searchtags.ts)_
 <!-- commandsstop -->

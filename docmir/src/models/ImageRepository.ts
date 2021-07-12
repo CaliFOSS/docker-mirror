@@ -12,6 +12,7 @@ export class ImageRepository {
   private _registryServer: string = "";
   private registryProvider: Providers = Providers.ecr;
   private _imageRepoName: string;
+  // @ts-ignore
   private _managedTags: Tag [];
 
   constructor(imageRepoName: string, registryServer?: string, registryProvider?: Providers) {

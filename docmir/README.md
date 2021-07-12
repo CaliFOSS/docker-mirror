@@ -19,7 +19,7 @@ $ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docmir/0.1.4 darwin-x64 node-v16.2.0
+docmir/0.1.5 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -29,7 +29,6 @@ USAGE
 # Commands
 <!-- commands -->
 * [`docmir auth [DOCKERHUB]`](#docmir-auth-dockerhub)
-* [`docmir hello [FILE]`](#docmir-hello-file)
 * [`docmir help [COMMAND]`](#docmir-help-command)
 * [`docmir pull [IMAGE] [TAG]`](#docmir-pull-image-tag)
 * [`docmir registry [ACTION]`](#docmir-registry-action)
@@ -50,27 +49,7 @@ OPTIONS
   -u, --userName=userName          docker username
 ```
 
-_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.4/src/commands/auth.ts)_
-
-## `docmir hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ docmir hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ docmir hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.4/src/commands/hello.ts)_
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.5/src/commands/auth.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -101,7 +80,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.4/src/commands/pull.ts)_
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.5/src/commands/pull.ts)_
 
 ## `docmir registry [ACTION]`
 
@@ -117,7 +96,7 @@ OPTIONS
   -h, --help           show CLI help
 ```
 
-_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.4/src/commands/registry.ts)_
+_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.5/src/commands/registry.ts)_
 
 ## `docmir searchtags [IMAGENAME]`
 
@@ -132,5 +111,5 @@ OPTIONS
   -l, --limit=limit  Limit the number of tags to pull
 ```
 
-_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.4/src/commands/searchtags.ts)_
+_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.5/src/commands/searchtags.ts)_
 <!-- commandsstop -->

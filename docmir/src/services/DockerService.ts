@@ -66,7 +66,7 @@ export class DockerService {
   // @ts-ignore
   public async dockerLoginRepo(repository: string, userName?: string, userPassword?: string): Promise<string> {
     const loginWithoutCreds = 'login ' + repository
-
+    console.log(userName, userPassword)
     return new Promise((resolve, reject) => {
       if (userName && userPassword) {
         this._userName = userName

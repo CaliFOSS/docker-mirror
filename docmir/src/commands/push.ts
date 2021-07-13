@@ -11,7 +11,7 @@ export default class Push extends Command {
   }
 
   static args = [
-    {name: 'provider', required: true, options: ['ecr', 'docker']},
+    {name: 'provider', required: true, options: ['ecr', 'docker'], description: 'The provider you will push images to'},
     {name: 'image', required: true},
     {name: 'repoURL', required: true},
     {name: 'tag', required: true},

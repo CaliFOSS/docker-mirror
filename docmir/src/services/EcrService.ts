@@ -48,12 +48,12 @@ export class EcrService extends RegistryProvider {
         }
         this.ecr.getAuthorizationToken(params, (err, data) => {
           if (err) {
-            console.log(err, err.stack)
+            //console.log(err, err.stack)
             reject(err)
           } else {
             // console.log(data);
             // @ts-ignore
-            this.dockerCreds.password = data.authorizationData[0].authorizationToken
+            this.dockerCreds.password = atob(data.authorizationData[0].authorizationToken).split(':')[1];
             resolve(this.dockerCreds)
           }
         })

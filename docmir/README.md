@@ -19,7 +19,7 @@ $ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docmir/0.3.1 darwin-x64 node-v16.2.0
+docmir/0.4.0 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -43,6 +43,9 @@ Working with Authentication for Dockerhub and registry
 USAGE
   $ docmir auth [PROVIDER]
 
+ARGUMENTS
+  PROVIDER  (ecr|docker) [default: docker] The registry provider to be working with
+
 OPTIONS
   -h, --help                       show CLI help
   -p, --userPassword=userPassword  docker password
@@ -50,7 +53,7 @@ OPTIONS
   -u, --userName=userName          docker username
 ```
 
-_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.3.1/src/commands/auth.ts)_
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.4.0/src/commands/auth.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -77,11 +80,15 @@ describe the command here
 USAGE
   $ docmir pull [IMAGE] [TAG]
 
+ARGUMENTS
+  IMAGE  Image to pull from dockerhub
+  TAG    tag to pull from dockerhub
+
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help  Help command
 ```
 
-_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.3.1/src/commands/pull.ts)_
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.4.0/src/commands/pull.ts)_
 
 ## `docmir push PROVIDER IMAGE REPOURL TAG`
 
@@ -91,12 +98,18 @@ describe the command here
 USAGE
   $ docmir push PROVIDER IMAGE REPOURL TAG
 
+ARGUMENTS
+  PROVIDER  (ecr|docker) The provider you will push images to
+  IMAGE
+  REPOURL
+  TAG
+
 OPTIONS
   -h, --help       show CLI help
   -n, --name=name  name to print
 ```
 
-_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.3.1/src/commands/push.ts)_
+_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.4.0/src/commands/push.ts)_
 
 ## `docmir registry PROVIDER COMMAND [REPONAME]`
 
@@ -112,7 +125,7 @@ OPTIONS
   -h, --help           show CLI help
 ```
 
-_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.3.1/src/commands/registry.ts)_
+_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.4.0/src/commands/registry.ts)_
 
 ## `docmir searchtags [IMAGENAME] [PROVIDER] [SERVER]`
 
@@ -127,5 +140,5 @@ OPTIONS
   -l, --limit=limit  Limit the number of tags to pull
 ```
 
-_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.3.1/src/commands/searchtags.ts)_
+_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.4.0/src/commands/searchtags.ts)_
 <!-- commandsstop -->

@@ -1,5 +1,6 @@
 import {Command, flags} from '@oclif/command'
 import {SyncController} from "../controllers/SyncController";
+import {Providers} from "../models/types";
 
 export default class Auth extends Command {
   static description = 'Working with Authentication for Dockerhub and registry'
@@ -9,26 +10,25 @@ export default class Auth extends Command {
     // flag with a value (-n, --name=VALUE)
     userName: flags.string({char: 'u', description: 'docker username'}),
     userPassword: flags.string({char: 'p', description: 'docker password'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
+    repository: flags.string({char: 'r', description: 'Repository url'})
   }
 
-  static args = [{name: 'dockerhub'}]
+  static args = [
+    {name: 'provider', options: ['ecr', 'docker'], default: 'docker'}
+  ]
 
   async run() {
-    const {args, flags} = this.parse(Auth)
+    const {args, flags} = this.parse(Auth);
     let syncController = new SyncController();
 
-    console.log(args.dockerhub, " ", flags.userName, " ", flags.userPassword);
-
-    if (args.dockerhub && flags.userPassword && flags.userName) {
-      this.log(syncController.authDockerHub(flags.userName, flags.userPassword));
-
-    }else if(args.dockerhub){
-      this.log(syncController.isLoggedIn());
+    //dockerhub flow
+    if (flags.userPassword && flags.userName) {
+      this.log(syncController.dockerLogin(flags.userName, flags.userPassword));
+    } else {
+      this.log(syncController.isLoggedIn(args.provider));
     }
-    else {
-      this.log('Nothing to do');
-    }
+
   }
+
+
 }

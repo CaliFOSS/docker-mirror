@@ -8,43 +8,43 @@ import {RegistryProvider} from "../services/RegistryProvider";
 import {Providers, Tag} from "./types";
 
 export class ImageRepository {
+  get provider(): Providers {
+    return this._provider;
+  }
 
-  private _registryServer: string = "";
-  private registryProvider: Providers = Providers.ecr;
-  private _imageRepoName: string;
+  set provider(value: Providers) {
+    this._provider = value;
+  }
+
+  private _server: string = "";
+  private _provider: Providers = Providers.ecr;
+  private _repoName: string;
   // @ts-ignore
   private _managedTags: Tag [];
 
-  constructor(imageRepoName: string, registryServer?: string, registryProvider?: Providers) {
+  constructor(imageRepoName: string, registryServer: string, registryProvider: Providers) {
 
-    this._imageRepoName = imageRepoName;
-    if (registryServer) {
-      this._registryServer = registryServer;
-    }
-
-    if (registryProvider) {
-      this.registryProvider = registryProvider;
-    }
+    this._repoName = imageRepoName;
+    this._server = registryServer;
+    this._provider = registryProvider;
   }
 
 
-  get registryServer(): string {
-    return this._registryServer;
+  get server(): string {
+    return this._server;
   }
 
-  set registryServer(value: string) {
-    this._registryServer = value;
+  set server(value: string) {
+    this._server = value;
   }
 
-
-  get imageRepoName(): string {
-    return this._imageRepoName;
+  get repoName(): string {
+    return this._repoName;
   }
 
-  set imageRepoName(value: string) {
-    this._imageRepoName = value;
+  set repoName(value: string) {
+    this._repoName = value;
   }
-
 
   get managedTags(): Tag[] {
     return this._managedTags;

@@ -15,6 +15,7 @@ export class DockerService {
     }
   }
 
+  // @ts-ignore
   public dockerLogin(userName?: string, userPassword?: string): string {
 
     let loginWithoutCreds = 'login';
@@ -43,9 +44,60 @@ export class DockerService {
         return "Login Failed.  Please re-login";
       })
     }
-    console.error("Incorrect usage of docker login");
-    return "";
+    //console.error("Incorrect usage of docker login");
+   // return "";
   }
+
+  // @ts-ignore
+  public dockerLoginRepo(repository: string,userName?: string, userPassword?: string ): string {
+
+    let loginWithoutCreds = 'login ' + repository;
+
+    if (userName && userPassword) {
+      this._userName = userName;
+      this._userPassword = userPassword
+
+      let loginWithCreds = 'login ' + repository + ' -u ' + this._userName + ' -p ' + this._userPassword;
+      // @ts-ignore
+      this._userName = userName;
+      // @ts-ignore
+      this._userPassword = userPassword;
+
+      this.docker.command(loginWithCreds).then((data) => {
+        //console.log('data = ', data);
+        return data.login;
+      }, (rejected) => {
+        //console.log('rejected = ', rejected);
+        return rejected;
+      })
+    } else {
+      this.docker.command(loginWithoutCreds).then((data) => {
+        return data.login;
+      }, (rejected) => {
+        return "Login Failed.  Please re-login";
+      })
+    }
+
+
+  }
+
+  public pushImage(repository: string, imageName: string, tag: string ){
+    //TODO: check if image is local first by listing all images
+    this.docker.command('tag ' + imageName +  ':' + tag + ' ' + repository).then((data)=>{
+      console.log(data);
+      this.docker.command('push ' + repository + ':' + tag).then((data)=>{
+        console.log(data);
+        console.log("Image has been uploaded");
+      }, (rejected)=>{
+        console.log(rejected);
+        console.log('There seems to be a problem with the push')
+      });
+
+    }, (rejected) => {
+      console.log(rejected);
+      console.log('There was an issue with the tagging of the image.')
+    })
+  };
 
   public dockerLogout(): string {
     this.docker.command('logout').then((data) => {

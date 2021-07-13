@@ -9,8 +9,8 @@ export interface Tag {
 }
 
 export enum Providers {
-  ecr,
-  docker
+  ecr = 'ecr',
+  docker = 'docker'
 }
 
 

@@ -28,24 +28,25 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`docmir auth [DOCKERHUB]`](#docmir-auth-dockerhub)
+* [`docmir auth [PROVIDER]`](#docmir-auth-provider)
 * [`docmir help [COMMAND]`](#docmir-help-command)
 * [`docmir pull [IMAGE] [TAG]`](#docmir-pull-image-tag)
-* [`docmir registry [ACTION]`](#docmir-registry-action)
+* [`docmir push [FILE]`](#docmir-push-file)
+* [`docmir registry PROVIDER COMMAND [REPONAME]`](#docmir-registry-provider-command-reponame)
 * [`docmir searchtags [IMAGENAME]`](#docmir-searchtags-imagename)
 
-## `docmir auth [DOCKERHUB]`
+## `docmir auth [PROVIDER]`
 
 Working with Authentication for Dockerhub and registry
 
 ```
 USAGE
-  $ docmir auth [DOCKERHUB]
+  $ docmir auth [PROVIDER]
 
 OPTIONS
-  -f, --force
   -h, --help                       show CLI help
   -p, --userPassword=userPassword  docker password
+  -r, --repository=repository      Repository url
   -u, --userName=userName          docker username
 ```
 
@@ -82,13 +83,29 @@ OPTIONS
 
 _See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.5/src/commands/pull.ts)_
 
-## `docmir registry [ACTION]`
+## `docmir push [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ docmir registry [ACTION]
+  $ docmir push [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.1.5/src/commands/push.ts)_
+
+## `docmir registry PROVIDER COMMAND [REPONAME]`
+
+describe the command here
+
+```
+USAGE
+  $ docmir registry PROVIDER COMMAND [REPONAME]
 
 OPTIONS
   -d, --docker=docker  flags the image pull from docker

@@ -1,160 +1,175 @@
-import {Docker, Options} from 'docker-cli-js';
-import axios from "axios";
+import {Docker, Options} from 'docker-cli-js'
+import * as Sinon from "sinon";
+import axios from 'axios'
+import {Providers} from "../models/types";
+
 
 export class DockerService {
+  private _userName = ''
 
-  private _userName: string = ""
-  private _userPassword: string = "";
+  private _userPassword = '';
+
   private docker = new Docker();
+
   private baseSearchUrl = 'https://registry.hub.docker.com/v1/repositories/'
 
-  constructor(dockerDependency?: Docker) {
-    //dependency injection for tests
-    if (dockerDependency) {
-      this.docker = dockerDependency;
+  public dockerStub: any
+
+
+  constructor(test?: boolean) {
+    if (test) {
+      this.dockerStub = Sinon.stub(this.docker, 'command').withArgs('login')
+      this.dockerStub.resolves('asdf')
+      /*
+      this.dockerStub = Sinon.createStubInstance(Docker);
+      this.dockerStub.command('login').returnsThis();
+      this.docker = this.dockerStub();
+       */
+
+      //(Promise.resolve('Login Succeeded'))
     }
   }
 
   // @ts-ignore
-  public async dockerLogin(userName?: string, userPassword?: string): string {
+  public async dockerLogin(userName?: string, userPassword?: string): Promise<string> {
+    const loginWithoutCreds = 'login'
 
-    let loginWithoutCreds = 'login';
+    return new Promise((resolve, reject) => {
+      //resolve('Log')
+      if (userName && userPassword) {
+        this._userName = userName
+        this._userPassword = userPassword
 
-    if (userName && userPassword) {
-      this._userName = userName;
-      this._userPassword = userPassword
+        const loginWithCreds = 'login -u ' + this._userName + ' -p ' + this._userPassword
+        // @ts-ignore
+        this._userName = userName
+        // @ts-ignore
+        this._userPassword = userPassword
 
-      let loginWithCreds = 'login -u ' + this._userName + ' -p ' + this._userPassword;
-      // @ts-ignore
-      this._userName = userName;
-      // @ts-ignore
-      this._userPassword = userPassword;
-
-      this.docker.command(loginWithCreds).then((data) => {
-        //console.log('data = ', data);
-        return data.login;
-      }, (rejected) => {
-        //console.log('rejected = ', rejected);
-        return rejected;
-      })
-    } else {
-      this.docker.command(loginWithoutCreds).then((data) => {
-        return data.login;
-      }, (rejected) => {
-        return "Login Failed.  Please re-login";
-      })
-    }
-    //console.error("Incorrect usage of docker login");
-   // return "";
+        this.docker.command(loginWithCreds).then(data => {
+          // console.log('data = ', data);
+          return resolve(data.login);
+        }, rejected => {
+          // console.log('rejected = ', rejected);
+          return reject(rejected)
+        })
+      } else {
+        this.docker.command(loginWithoutCreds).then(data => {
+          resolve(data.login);
+        }, rejected => {
+          return reject('Login Failed.  Please re-login')
+        })
+      }
+    })
   }
 
   // @ts-ignore
-  public async dockerLoginRepo(repository: string,userName?: string, userPassword?: string ): Promise<string> {
+  public async dockerLoginRepo(repository: string, userName?: string, userPassword?: string): Promise<string> {
+    const loginWithoutCreds = 'login ' + repository
 
-    let loginWithoutCreds = 'login ' + repository;
+    return new Promise((resolve, reject) => {
+      if (userName && userPassword) {
+        this._userName = userName
+        this._userPassword = userPassword
 
-    if (userName && userPassword) {
-      this._userName = userName;
-      this._userPassword = userPassword
+        const loginWithCreds = 'login ' + repository + ' -u ' + this._userName + ' -p ' + this._userPassword
+        // @ts-ignore
+        this._userName = userName
+        // @ts-ignore
+        this._userPassword = userPassword
 
-      let loginWithCreds = 'login ' + repository + ' -u ' + this._userName + ' -p ' + this._userPassword;
-      // @ts-ignore
-      this._userName = userName;
-      // @ts-ignore
-      this._userPassword = userPassword;
-
-      this.docker.command(loginWithCreds).then((data) => {
-        //console.log('data = ', data);
-        return data.login;
-      }, (rejected) => {
-        //console.log('rejected = ', rejected);
-        return rejected;
-      })
-    } else {
-      this.docker.command(loginWithoutCreds).then((data) => {
-        return data.login;
-      }, (rejected) => {
-        return "Login Failed.  Please re-login";
-      })
-    }
-
+        this.docker.command(loginWithCreds).then(data => {
+          // console.log('data = ', data);
+          resolve(data.login);
+        }, rejected => {
+          // console.log('rejected = ', rejected);
+          return reject(rejected)
+        })
+      } else {
+        this.docker.command(loginWithoutCreds).then(data => {
+          resolve(data.login);
+        }, rejected => {
+          console.log(rejected)
+          return reject('Login Failed.  Please re-login')
+        })
+      }
+    })
 
   }
 
-  public pushImage(repository: string, imageName: string, tag: string ){
-    //TODO: check if image is local first by listing all images
-    this.docker.command('tag ' + imageName +  ':' + tag + ' ' + repository + ':' + tag).then((data)=>{
-      console.log(data);
-      this.docker.command('push ' + repository + ':' + tag).then((data)=>{
-        console.log(data);
-        console.log("Image has been uploaded");
-      }, (rejected)=>{
-        console.log(rejected);
+  public pushImage(repository: string, imageName: string, tag: string) {
+    // TODO: check if image is local first by listing all images
+    this.docker.command('tag ' + imageName + ':' + tag + ' ' + repository + ':' + tag).then(data => {
+      console.log(data)
+      this.docker.command('push ' + repository + ':' + tag).then(data => {
+        console.log(data)
+        console.log('Image has been uploaded')
+      }, rejected => {
+        console.log(rejected)
         console.log('There seems to be a problem with the push')
-      });
-
-    }, (rejected) => {
-      console.log(rejected);
+      })
+    }, rejected => {
+      console.log(rejected)
       console.log('There was an issue with the tagging of the image.')
     })
-  };
+  }
 
   public dockerLogout(): string {
-    this.docker.command('logout').then((data) => {
-      return data;
-    }, (rejected) => {
-      return "Logout Failed.  Please re-login";
+    this.docker.command('logout').then(data => {
+      return data
+    }, rejected => {
+      return 'Logout Failed.  Please re-login'
     })
-    return "Failure"
+    return 'Failure'
   }
 
   public getAllTags(imageName: string) {
-    axios.get(this.baseSearchUrl + imageName + '/tags').then((response) => {
-      response.data.forEach((element: { name: any; }) => {
-        console.log(element.name);
+
+
+    axios.get(this.baseSearchUrl + imageName + '/tags').then(response => {
+      response.data.forEach((element: { name: any }) => {
+        console.log(element.name)
       })
-    }).catch((error) => {
-      if (error.response.status == 404 ){
-        console.log("The registry " + imageName + " was not found on docker hub.")
-      }else{
-        console.log(error);
+    }).catch(error => {
+      if (error.response.status == 404) {
+        console.log('The registry ' + imageName + ' was not found on docker hub.')
+      } else {
+        console.log(error)
       }
-    });
+    })
+
   }
 
   public pullImage(imageName: string, imageTag?: string): boolean {
-
-    let pullImageCommand = "";
+    let pullImageCommand = ''
     if (imageTag) {
-
-      pullImageCommand = "pull " + imageName + ":" + imageTag;
+      pullImageCommand = 'pull ' + imageName + ':' + imageTag
     } else {
-      pullImageCommand = "pull " + imageName;
+      pullImageCommand = 'pull ' + imageName
     }
 
-    this.docker.command(pullImageCommand).then((data) => {
+    this.docker.command(pullImageCommand).then(data => {
       console.log(data)
-      return true;
-    }, (rejected) => {
-      return false;
+      return true
+    }, rejected => {
+      return false
     })
-  return false;
-
+    return false
   }
 
   get userName(): string {
-    return this._userName;
+    return this._userName
   }
 
   set userName(value: string) {
-    this._userName = value;
+    this._userName = value
   }
 
   get userPassword(): string {
-    return this._userPassword;
+    return this._userPassword
   }
 
   set userPassword(value: string) {
-    this._userPassword = value;
+    this._userPassword = value
   }
 }

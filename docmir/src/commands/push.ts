@@ -1,5 +1,5 @@
 import {Command, flags} from '@oclif/command'
-import {SyncController} from "../controllers/SyncController";
+import {SyncController} from '../controllers/SyncController'
 
 export default class Push extends Command {
   static description = 'describe the command here'
@@ -14,16 +14,14 @@ export default class Push extends Command {
     {name: 'provider', required: true, options: ['ecr', 'docker']},
     {name: 'image', required: true},
     {name: 'repoURL', required: true},
-    {name: 'tag', required: true}
+    {name: 'tag', required: true},
 
   ]
 
   async run() {
     const {args, flags} = this.parse(Push)
-    let syncController = new SyncController();
+    const syncController = new SyncController()
 
-    syncController.pushImage(args.provider, args.image, args.repoURL, args.tag);
-
-
+    syncController.pushImage(args.provider, args.image, args.repoURL, args.tag)
   }
 }

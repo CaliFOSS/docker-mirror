@@ -1,20 +1,16 @@
 import {fancy} from 'fancy-test'
 import {expect} from 'chai'
-import {DockerService} from "../../src/services/DockerService";
-import {Docker, dockerCommand} from "docker-cli-js";
-import * as sinon from "sinon";
+import {DockerService} from '../../src/services/DockerService'
+import {Docker, dockerCommand} from 'docker-cli-js'
+import * as sinon from 'sinon'
+import * as jest from 'jest'
 
-let docker = new Docker();
-let spy = sinon.spy();
-let dockerMock = sinon.mock(docker);
-
-let dockerService = DockerService()
-
-dockerMock.expects("command").once().throws();
-
+const docker = new DockerService(true)
 
 describe('Docker Login', () => {
   fancy
-    .do( expect(docker.dockerLogin()).to.equal('Login Succeeded'))
-    .it('Logged in', () => {})
+    .it('tests standard login', async () => {
+      let value = await docker.dockerLogin();
+      expect(value).to.equal('Login Succeeded');
+    })
 })

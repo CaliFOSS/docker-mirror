@@ -1,5 +1,6 @@
 import {expect, test} from '@oclif/test'
 
+/*
 describe('registry', () => {
   test
   .stdout()
@@ -15,3 +16,4 @@ describe('registry', () => {
     expect(ctx.stdout).to.contain('hello jeff')
   })
 })
+*/

@@ -1,5 +1,5 @@
 import {Command, flags} from '@oclif/command'
-import {SyncController} from "../controllers/SyncController";
+import {SyncController} from '../controllers/SyncController'
 
 export default class Registry extends Command {
   static description = 'describe the command here'
@@ -15,19 +15,19 @@ export default class Registry extends Command {
   static args = [
     {name: 'provider', required: true, options: ['ecr', 'docker']},
     {name: 'command', required: true, options: ['create-repo']},
-    {name: 'reponame'}
+    {name: 'reponame'},
   ]
 
   async run() {
-    const {args, flags} = this.parse(Registry);
-    let syncController = new SyncController();
+    const {args, flags} = this.parse(Registry)
+    const syncController = new SyncController()
 
     if (args.command == 'create-repo') {
       if (args.reponame) {
-        this.log('creating registry for \'' + args.provider + '\' using name \'' + args.reponame + '\'');
-        syncController.createRepository(args.provider, args.reponame);
+        this.log('creating registry for \'' + args.provider + '\' using name \'' + args.reponame + '\'')
+        syncController.createRepository(args.provider, args.reponame)
       } else {
-        this.log('Missing Repo name');
+        this.log('Missing Repo name')
       }
     }
   }

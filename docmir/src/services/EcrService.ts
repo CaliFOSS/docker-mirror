@@ -18,41 +18,54 @@ export class EcrService extends RegistryProvider {
   }
 
   // @ts-ignore
-  public credentialsValid(): boolean {
-    this.sts.getCallerIdentity({}, (err, data) => {
-      if (err) {
-        console.log('Credentials not valid.  Please include new environment variables.');
-        console.log(err, err.stack);
-        return false;
-      }  // an error occurred
-      else {
-        console.log('Credentials are valid!')
-        return true;
+  public async credentialsValid(): Promise<string> {
+
+
+    return new Promise((resolve, reject) => {
+      try {
+        this.sts.getCallerIdentity({}, (err, data) => {
+          if (err) {
+            console.log(err, err.stack);
+            return reject('Credentials not valid.  Please include new environment variables.');
+          }  // an error occurred
+          else {
+            resolve('Credentials are valid!');
+          }
+        })
+
+      }catch (error){
+        console.log(error)
       }
     })
+
   }
 
-  public getCreds(): DockerCreds {
+  public async getCreds(): Promise<DockerCreds> {
 
-    if (this.credentialsValid()) {
-      let params = {
-        registryIds: [this._accountID]
-      }
-      this.ecr.getAuthorizationToken(params, (err, data) => {
-        if (err) {
-          console.log(err, err.stack);
-        } else {
-          console.log(data);
-          // @ts-ignore
-          this.dockerCreds.password = data.authorizationData[0].authorizationToken;
-          return this.dockerCreds;
-        }
-      });
-      return this.dockerCreds;
-    } else {
-      console.log('Invalid AWS credentials.  Please add new credentials.')
-      return this.dockerCreds;
-    }
+
+      return new Promise((resolve, reject)=>{
+        this.credentialsValid().then((value)=>{
+          console.log(value);
+          let params = {
+            registryIds: [this._accountID]
+          }
+          this.ecr.getAuthorizationToken(params, (err, data) => {
+            if (err) {
+              console.log(err, err.stack);
+              reject(err)
+            } else {
+              //console.log(data);
+              // @ts-ignore
+              this.dockerCreds.password = data.authorizationData[0].authorizationToken;
+              resolve(this.dockerCreds);
+            }
+          });
+        }, (error)=>{
+          //console.log(error);
+          reject(error) ;
+        })
+      })
+
   }
 
 

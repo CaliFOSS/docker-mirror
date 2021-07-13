@@ -2,18 +2,19 @@ import {fancy} from 'fancy-test'
 import {expect} from 'chai'
 import {DockerService} from "../../src/services/DockerService";
 import {Docker, dockerCommand} from "docker-cli-js";
-import {ImportMock} from "ts-mock-imports";
+import * as sinon from "sinon";
 
 let docker = new Docker();
+let spy = sinon.spy();
+let dockerMock = sinon.mock(docker);
 
-var manager = ImportMock.mockClass(docker);
-manager.mock('command()', 'Login Succeeded');
-const dockerService = new DockerService(manager.getMockInstance());
+let dockerService = DockerService()
+
+dockerMock.expects("command").once().throws();
 
 
 describe('Docker Login', () => {
   fancy
-    .stub(dockerCommand, 'login', () => 'Login Succeeded'  )
-    .do( expect(dockerService.dockerLogin()).to.equal('Login Succeeded'))
+    .do( expect(docker.dockerLogin()).to.equal('Login Succeeded'))
     .it('Logged in', () => {})
 })

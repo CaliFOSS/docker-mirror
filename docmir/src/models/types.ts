@@ -1,5 +1,5 @@
 export interface DockerCreds {
-  userName: string;
+  userName: string ;
   password: string;
 }
 

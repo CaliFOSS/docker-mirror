@@ -16,7 +16,7 @@ export class DockerService {
   }
 
   // @ts-ignore
-  public dockerLogin(userName?: string, userPassword?: string): string {
+  public async dockerLogin(userName?: string, userPassword?: string): string {
 
     let loginWithoutCreds = 'login';
 
@@ -49,7 +49,7 @@ export class DockerService {
   }
 
   // @ts-ignore
-  public dockerLoginRepo(repository: string,userName?: string, userPassword?: string ): string {
+  public async dockerLoginRepo(repository: string,userName?: string, userPassword?: string ): Promise<string> {
 
     let loginWithoutCreds = 'login ' + repository;
 
@@ -83,7 +83,7 @@ export class DockerService {
 
   public pushImage(repository: string, imageName: string, tag: string ){
     //TODO: check if image is local first by listing all images
-    this.docker.command('tag ' + imageName +  ':' + tag + ' ' + repository).then((data)=>{
+    this.docker.command('tag ' + imageName +  ':' + tag + ' ' + repository + ':' + tag).then((data)=>{
       console.log(data);
       this.docker.command('push ' + repository + ':' + tag).then((data)=>{
         console.log(data);

@@ -4,6 +4,7 @@ import {ImageRepository} from "../models/ImageRepository";
 import {EcrService} from "../services/EcrService";
 import {Providers} from "../models/types";
 import {RegistryService} from "../services/RegistryService";
+import {callbackify} from "util";
 
 
 export class SyncController {
@@ -86,9 +87,17 @@ export class SyncController {
         //TODO: check if repo exists
         //TODO: validate docker login
         //TODO: Add repo to state and save
-        let creds = this.ecrService?.getCreds();
-        this.dockerService.dockerLoginRepo(repoURL, creds?.userName, creds?.password);
-        this.dockerService.pushImage(repoURL, imageName, tag);
+        this.ecrService?.getCreds().then((creds) => {
+          this.dockerService.dockerLoginRepo(repoURL, creds?.userName, creds?.password).then((response) => {
+            this.dockerService.pushImage(repoURL, imageName, tag);
+          }, (error) => {
+            console.log(error);
+          })
+        }, (error) => {
+          console.log(error);
+        });
+        //
+
         break;
       case Providers.docker:
         break;

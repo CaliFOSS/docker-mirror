@@ -19,7 +19,7 @@ export default class Searchtags extends Command {
     if (flags.limit) {
       console.log('Functionality not implemented yet')
     } else {
-      syncController.searchTags(args.imagename, args.provider, args.server);
+      syncController.searchTags(args.imagename, args.provider);
     }
   }
 }

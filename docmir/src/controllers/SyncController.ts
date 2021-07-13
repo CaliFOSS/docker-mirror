@@ -56,7 +56,7 @@ export class SyncController {
     }
   }
 
-  public async searchTags(imageName: string, provider?: Providers): Promise{
+  public async searchTags(imageName: string, provider?: Providers){
 
     let tags: string[] | undefined;
 

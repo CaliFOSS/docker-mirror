@@ -1,7 +1,7 @@
 {
   "name": "docmir",
   "description": "A docker hub mirror application",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": "jeffgarrett @JeffreyGarrett",
   "bin": {
     "docmir": "./bin/run"
@@ -11,6 +11,7 @@
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^3",
+    "atob": "^2.1.2",
     "aws-sdk": "^2.936.0",
     "axios": "^0.21.1",
     "docker-cli-js": "^2.8.0",

@@ -22,7 +22,7 @@ export default class Registry extends Command {
     const {args, flags} = this.parse(Registry)
     const syncController = new SyncController()
 
-    if (args.command == 'create-repo') {
+    if (args.command === 'create-repo') {
       if (args.reponame) {
         this.log('creating registry for \'' + args.provider + '\' using name \'' + args.reponame + '\'')
         syncController.createRepository(args.provider, args.reponame)

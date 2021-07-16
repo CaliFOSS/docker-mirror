@@ -1,7 +1,6 @@
 import * as ECR from 'aws-sdk/clients/ecr'
 import * as STS from 'aws-sdk/clients/sts'
 import {RegistryProvider} from './RegistryProvider'
-import {Docker} from 'docker-cli-js'
 import {DockerCreds} from '../models/types'
 
 export class EcrService extends RegistryProvider {
@@ -13,11 +12,17 @@ export class EcrService extends RegistryProvider {
 
   protected dockerCreds: DockerCreds = {userName: 'AWS', password: ''};
 
-  constructor(accountId: string, accessKeyId: string, secretAccessKey: string) {
+  constructor(accountId?: string, accessKeyId?: string, secretAccessKey?: string) {
     super()
-    this.ecr.config.accessKeyId = accessKeyId
-    this.ecr.config.secretAccessKey = secretAccessKey
-    this._accountID = accountId
+    if (accountId && accessKeyId && secretAccessKey) {
+      this.ecr.config.accessKeyId = accessKeyId
+      this.ecr.config.secretAccessKey = secretAccessKey
+      this._accountID = accountId
+    } else {
+      this.ecr.config.accessKeyId = process.env.AWS_ACCESS_KEY_ID
+      this.ecr.config.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
+      this._accountID = process.env.AWS_ACCOUNT_ID || ''
+    }
   }
 
   // @ts-ignore
@@ -34,7 +39,7 @@ export class EcrService extends RegistryProvider {
         })
       } catch (error) {
         console.log(error)
-        reject("Credentials not valid")
+        reject('Credentials not valid \n' + error)
       }
     })
   }
@@ -48,12 +53,12 @@ export class EcrService extends RegistryProvider {
         }
         this.ecr.getAuthorizationToken(params, (err, data) => {
           if (err) {
-            //console.log(err, err.stack)
+            // console.log(err, err.stack)
             reject(err)
           } else {
             // console.log(data);
             // @ts-ignore
-            this.dockerCreds.password = atob(data.authorizationData[0].authorizationToken).split(':')[1];
+            this.dockerCreds.password = atob(data.authorizationData[0].authorizationToken).split(':')[1]
             resolve(this.dockerCreds)
           }
         })
@@ -81,31 +86,26 @@ export class EcrService extends RegistryProvider {
   }
 
   public async getTags(image: string): Promise<string[]> {
-
     return new Promise((resolve, reject) => {
-      let images: string[] = [];
+      const images: string[] = []
 
-      let params2 = {
-        repositoryName: image
+      const params2 = {
+        repositoryName: image,
       }
 
       this.ecr.listImages(params2, function (err, data) {
         if (err) {
-          return reject(err);
+          return reject(err)
         } // an error occurred
-        else {
-          //console.log(data);
-          data.imageIds?.forEach((imageId) => {
-            if (imageId.imageTag) {
-              images.push(imageId.imageTag);
-            }
 
+          // console.log(data);
+          data.imageIds?.forEach(imageId => {
+            if (imageId.imageTag) {
+              images.push(imageId.imageTag)
+            }
           })
 
-          return resolve(images);
-
-        }
-
+          return resolve(images)
       })
 
       // successful response
@@ -119,9 +119,8 @@ export class EcrService extends RegistryProvider {
        ]
       }
       */
-    });
-
-  };
+    })
+  }
 
   get accountID(): string {
     return this._accountID

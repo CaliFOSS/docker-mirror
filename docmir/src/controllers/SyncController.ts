@@ -45,7 +45,7 @@ export class SyncController {
   public isLoggedIn(provider: Providers) {
     switch (provider) {
     case Providers.ecr:
-        return this.ecrService?.credentialsValid()
+      return this.ecrService?.credentialsValid()
       break
     case Providers.docker:
       return this.dockerService.dockerLogin()
@@ -56,22 +56,21 @@ export class SyncController {
     }
   }
 
-  public async searchTags(imageName: string, provider?: Providers){
-
-    let tags: string[] | undefined;
+  public async searchTags(imageName: string, provider?: Providers) {
+    let tags: string[] | undefined
 
     switch (provider) {
-      case Providers.ecr:
-          tags = await this.ecrService?.getTags(imageName);
-          if (tags) {
-            tags.forEach(value => {
-              console.log(value);
-            })
-          }
-        break;
-      default:
-        this.dockerService.getAllTags(imageName)
-        break;
+    case Providers.ecr:
+      tags = await this.ecrService?.getTags(imageName)
+      if (tags) {
+        tags.forEach(value => {
+          console.log(value)
+        })
+      }
+      break
+    default:
+      this.dockerService.getAllTags(imageName)
+      break
     }
   }
 

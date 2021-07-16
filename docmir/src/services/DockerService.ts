@@ -1,8 +1,7 @@
 import {Docker, Options} from 'docker-cli-js'
-import * as Sinon from "sinon";
+import * as Sinon from 'sinon'
 import axios from 'axios'
-import {Providers} from "../models/types";
-
+import {Providers} from '../models/types'
 
 export class DockerService {
   private _userName = ''
@@ -15,7 +14,6 @@ export class DockerService {
 
   public dockerStub: any
 
-
   constructor(test?: boolean) {
     if (test) {
       this.dockerStub = Sinon.stub(this.docker, 'command').withArgs('login')
@@ -26,7 +24,7 @@ export class DockerService {
       this.docker = this.dockerStub();
        */
 
-      //(Promise.resolve('Login Succeeded'))
+      // (Promise.resolve('Login Succeeded'))
     }
   }
 
@@ -35,7 +33,7 @@ export class DockerService {
     const loginWithoutCreds = 'login'
 
     return new Promise((resolve, reject) => {
-      //resolve('Log')
+      // resolve('Log')
       if (userName && userPassword) {
         this._userName = userName
         this._userPassword = userPassword
@@ -48,14 +46,14 @@ export class DockerService {
 
         this.docker.command(loginWithCreds).then(data => {
           // console.log('data = ', data);
-          return resolve(data.login);
+          return resolve(data.login)
         }, rejected => {
           // console.log('rejected = ', rejected);
           return reject(rejected)
         })
       } else {
         this.docker.command(loginWithoutCreds).then(data => {
-          resolve(data.login);
+          resolve(data.login)
         }, rejected => {
           return reject('Login Failed.  Please re-login')
         })
@@ -80,21 +78,20 @@ export class DockerService {
 
         this.docker.command(loginWithCreds).then(data => {
           // console.log('data = ', data);
-          resolve(data.login);
+          resolve(data.login)
         }, rejected => {
           // console.log('rejected = ', rejected);
           return reject(rejected)
         })
       } else {
         this.docker.command(loginWithoutCreds).then(data => {
-          resolve(data.login);
+          resolve(data.login)
         }, rejected => {
           console.log(rejected)
           return reject('Login Failed.  Please re-login')
         })
       }
     })
-
   }
 
   public pushImage(repository: string, imageName: string, tag: string) {
@@ -124,8 +121,6 @@ export class DockerService {
   }
 
   public getAllTags(imageName: string) {
-
-
     axios.get(this.baseSearchUrl + imageName + '/tags').then(response => {
       response.data.forEach((element: { name: any }) => {
         console.log(element.name)
@@ -137,7 +132,6 @@ export class DockerService {
         console.log(error)
       }
     })
-
   }
 
   public pullImage(imageName: string, imageTag?: string): boolean {

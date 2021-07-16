@@ -10,7 +10,7 @@ export default class Pull extends Command {
 
   static args = [
     {name: 'image', require: true, description: 'Image to pull from dockerhub'},
-    {name: 'tag', description: 'tag to pull from dockerhub'}
+    {name: 'tag', description: 'tag to pull from dockerhub'},
   ]
 
   async run() {

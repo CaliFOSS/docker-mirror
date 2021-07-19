@@ -1,9 +1,15 @@
 
-// @ts-ignore
-import TagState = ImageRepository.TagState;
 import {Providers, Tag} from './types'
 
 export class ImageRepository {
+  get repoCreated(): boolean {
+    return this._repoCreated
+  }
+
+  set repoCreated(value: boolean) {
+    this._repoCreated = value
+  }
+
   get provider(): Providers {
     return this._provider
   }
@@ -18,13 +24,20 @@ export class ImageRepository {
 
   private _repoName: string;
 
+  private _repoCreated = false;
+
   // @ts-ignore
   private _managedTags: Tag [];
 
-  constructor(imageRepoName: string, registryServer: string, registryProvider: Providers) {
+  constructor(imageRepoName: string, registryServer: string, registryProvider: Providers, created?:boolean) {
     this._repoName = imageRepoName
     this._server = registryServer
     this._provider = registryProvider
+    this._repoCreated = created || false
+  }
+
+  public returnFakeRepo(): ImageRepository {
+    return new ImageRepository('error', 'error', Providers.docker)
   }
 
   get server(): string {

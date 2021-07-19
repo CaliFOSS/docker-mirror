@@ -4,7 +4,9 @@ import {RegistryProvider} from './RegistryProvider'
 import {DockerCreds} from '../models/types'
 
 export class EcrService extends RegistryProvider {
-  private ecr = new ECR({region: 'us-west-2'});
+  private region = 'us-west-2'
+
+  private ecr = new ECR({region: this.region});
 
   private sts = new STS();
 
@@ -47,7 +49,7 @@ export class EcrService extends RegistryProvider {
   public async getCreds(): Promise<DockerCreds> {
     return new Promise((resolve, reject) => {
       this.credentialsValid().then(value => {
-        console.log(value)
+        //console.log(value)
         const params = {
           registryIds: [this._accountID],
         }
@@ -69,20 +71,28 @@ export class EcrService extends RegistryProvider {
     })
   }
 
-  // @ts-ignore
-  public createRepo(name: string): boolean {
-    const params = {
-      repositoryName: name,
-    }
-
-    this.ecr.createRepository(params, (err, data) => {
-      if (err) {
-        console.log(err, err.stack)
-        return false
+  // create repo and return the repository url
+  public async createRepoReturnUrl(name: string): Promise<string> {
+    return new Promise((response, reject) => {
+      const params = {
+        repositoryName: name,
       }
-      console.log(data)
-      return true
+
+      this.ecr.createRepository(params, (err, data) => {
+        if (err) {
+          console.log(err, err.stack)
+          return reject(err)
+        }
+        // console.log(data)
+        return response(this.getServerURI(name))
+      })
     })
+  }
+
+  // helper function just to get the uri
+  public getServerURI(repoName: string): string {
+    const repo = this.accountID + '.dkr.ecr.' + this.region + '.amazonaws.com/' + repoName
+    return repo
   }
 
   public async getTags(image: string): Promise<string[]> {
@@ -98,27 +108,40 @@ export class EcrService extends RegistryProvider {
           return reject(err)
         } // an error occurred
 
-          // console.log(data);
-          data.imageIds?.forEach(imageId => {
-            if (imageId.imageTag) {
-              images.push(imageId.imageTag)
-            }
-          })
+        // console.log(data);
+        data.imageIds?.forEach(imageId => {
+          if (imageId.imageTag) {
+            images.push(imageId.imageTag)
+          }
+        })
 
-          return resolve(images)
+        return resolve(images)
       })
 
-      // successful response
-      /*
-      data = {
-       imageIds: [
-          {
-         imageDigest: "sha256:764f63476bdff6d83a09ba2a818f0d35757063724a9ac3ba5019c56f74ebf42a",
-         imageTag: "precise"
-        }
-       ]
+    })
+  }
+
+  public async repoExists(repoName: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const params = {
+        repositoryNames: [
+          repoName,
+        ],
       }
-      */
+
+      this.ecr.describeRepositories(params, (error, data) => {
+        if (error) {
+          if (error.statusCode === 400) {
+            return resolve(false)
+          }
+          return reject(error)
+        }  // @ts-ignore
+        if (data.repositories?.length > 0) {
+          return resolve(true)
+        }
+
+        return reject('Error in getting the repository from ECR')
+      })
     })
   }
 

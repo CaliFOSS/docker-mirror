@@ -7,14 +7,13 @@ export default class Registry extends Command {
   static flags = {
     help: flags.help({char: 'h'}),
     // flag with a value (-n, --name=VALUE)
-    docker: flags.string({char: 'd', description: 'flags the image pull from docker'}),
     // flag with no value (-f, --force)
     force: flags.boolean({char: 'f'}),
   }
 
   static args = [
-    {name: 'provider', required: true, options: ['ecr', 'docker']},
-    {name: 'command', required: true, options: ['create-repo']},
+    {name: 'provider', required: true, description: "The registry provider you are using", options: ['ecr', 'docker']},
+    {name: 'command', required: true, description: "Commands for providers", options: ['create-repo', 'create-sync']},
     {name: 'reponame'},
   ]
 
@@ -29,6 +28,8 @@ export default class Registry extends Command {
       } else {
         this.log('Missing Repo name')
       }
+    }else if(args.command === 'create-sync'){
+
     }
   }
 }

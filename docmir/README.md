@@ -19,7 +19,7 @@ $ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docmir/0.5.0 darwin-x64 node-v16.2.0
+docmir/0.5.1 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -35,7 +35,6 @@ USAGE
 * [`docmir push PROVIDER IMAGE REPOURL TAG`](#docmir-push-provider-image-repourl-tag)
 * [`docmir registry PROVIDER COMMAND [REPONAME]`](#docmir-registry-provider-command-reponame)
 * [`docmir searchtags [IMAGENAME] [PROVIDER] [SERVER]`](#docmir-searchtags-imagename-provider-server)
-* [`docmir sync [COMMAND] [IMAGE] [TAG]`](#docmir-sync-command-image-tag)
 
 ## `docmir auth [PROVIDER]`
 
@@ -55,7 +54,7 @@ OPTIONS
   -u, --userName=userName          docker username
 ```
 
-_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.0/src/commands/auth.ts)_
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/auth.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -92,7 +91,7 @@ OPTIONS
   -h, --help   show CLI help
 ```
 
-_See code: [src/commands/provider/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.0/src/commands/provider/create-sync.ts)_
+_See code: [src/commands/provider/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/provider/create-sync.ts)_
 
 ## `docmir pull [IMAGE] [TAG]`
 
@@ -110,7 +109,7 @@ OPTIONS
   -h, --help  Help command
 ```
 
-_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.0/src/commands/pull.ts)_
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/pull.ts)_
 
 ## `docmir push PROVIDER IMAGE REPOURL TAG`
 
@@ -131,7 +130,7 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.0/src/commands/push.ts)_
+_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/push.ts)_
 
 ## `docmir registry PROVIDER COMMAND [REPONAME]`
 
@@ -151,7 +150,7 @@ OPTIONS
   -h, --help   show CLI help
 ```
 
-_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.0/src/commands/registry.ts)_
+_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/registry.ts)_
 
 ## `docmir searchtags [IMAGENAME] [PROVIDER] [SERVER]`
 
@@ -166,20 +165,5 @@ OPTIONS
   -l, --limit=limit  Limit the number of tags to pull
 ```
 
-_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.0/src/commands/searchtags.ts)_
-
-## `docmir sync [COMMAND] [IMAGE] [TAG]`
-
-describe the command here
-
-```
-USAGE
-  $ docmir sync [COMMAND] [IMAGE] [TAG]
-
-OPTIONS
-  -h, --help          show CLI help
-  -p, --provider=ecr  (required) [default: ecr] The container registry provider to work with
-```
-
-_See code: [src/commands/sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.0/src/commands/sync.ts)_
+_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/searchtags.ts)_
 <!-- commandsstop -->

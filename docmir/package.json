@@ -1,7 +1,7 @@
 {
   "name": "docmir",
   "description": "A docker hub mirror application",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": "jeffgarrett @JeffreyGarrett",
   "bin": {
     "docmir": "./bin/run"

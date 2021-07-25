@@ -11,7 +11,7 @@ export default class CreateSync extends Command {
   static args = [
     {name: 'provider', required: true, description: 'The registry provider', options: ['ecr', 'docker']},
     {name: 'reponame', required: true, description: 'Name of the docker repo you want to sync'},
-    {name: 'tag', required: true, description: 'The tag you want to start the sync with'},
+    {name: 'tag', required: true, description: 'The tag you want to sync'},
   ]
 
   async run() {

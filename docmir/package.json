@@ -1,6 +1,6 @@
 {
   "name": "docmir",
-  "description": "A docker hub mirror application",
+  "description": "A CLI application to create and sync images from dockerhub to provider of choice. Currently only supports (AWS ECR)",
   "version": "0.5.2",
   "author": "jeffgarrett @JeffreyGarrett",
   "bin": {

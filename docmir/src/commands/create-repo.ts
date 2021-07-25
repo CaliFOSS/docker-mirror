@@ -9,8 +9,8 @@ export default class CreateRepo extends Command {
   }
 
   static args = [
-    {name: 'provider', required: true, description: 'The registry provider you are using', options: ['ecr', 'docker']},
-    {name: 'reponame', required: true, description: 'Name you want the repo to be called. By defualt syncs are created with the name of the repo '},
+    {name: 'provider', required: true, description: 'The registry provider to create the repo', options: ['ecr', 'docker']},
+    {name: 'reponame', required: true, description: 'Name you want the repo to be called. By defualt syncs are created with the name of the image'},
   ]
 
   async run() {

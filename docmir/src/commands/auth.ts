@@ -13,7 +13,7 @@ export default class Auth extends Command {
   }
 
   static args = [
-    {name: 'provider', options: ['ecr', 'docker'], default: 'docker', description: 'The registry provider to be working with'},
+    {name: 'provider', options: ['ecr', 'docker'], default: 'docker', description: 'The registry provider'},
   ]
 
   async run() {

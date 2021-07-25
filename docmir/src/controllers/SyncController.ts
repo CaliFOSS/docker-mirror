@@ -83,6 +83,7 @@ export class SyncController {
       return 'Image is now local'
     }
     return 'Image pull failed'
+
   }
 
   public async pushImage(provider: Providers, imageName: string, repoURL: string, tag: string): Promise<boolean> {

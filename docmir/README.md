@@ -1,7 +1,7 @@
 docmir
 ======
 
-A docker hub mirror application
+A CLI application to create and sync images from dockerhub to provider of choice. Currently, only supports (AWS ECR)
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/docmir.svg)](https://npmjs.org/package/docmir)
@@ -19,7 +19,7 @@ $ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docmir/0.5.2 darwin-x64 node-v16.2.0
+docmir/0.5.3 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -45,7 +45,7 @@ USAGE
   $ docmir auth [PROVIDER]
 
 ARGUMENTS
-  PROVIDER  (ecr|docker) [default: docker] The registry provider to be working with
+  PROVIDER  (ecr|docker) [default: docker] The registry provider
 
 OPTIONS
   -h, --help                       show CLI help
@@ -54,7 +54,7 @@ OPTIONS
   -u, --userName=userName          docker username
 ```
 
-_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/auth.ts)_
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.3/src/commands/auth.ts)_
 
 ## `docmir create-repo PROVIDER REPONAME`
 
@@ -65,14 +65,14 @@ USAGE
   $ docmir create-repo PROVIDER REPONAME
 
 ARGUMENTS
-  PROVIDER  (ecr|docker) The registry provider you are using
-  REPONAME  Name you want the repo to be called. By defualt syncs are created with the name of the repo
+  PROVIDER  (ecr|docker) The registry provider to create the repo
+  REPONAME  Name you want the repo to be called. By defualt syncs are created with the name of the image
 
 OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/create-repo.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/create-repo.ts)_
+_See code: [src/commands/create-repo.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.3/src/commands/create-repo.ts)_
 
 ## `docmir create-sync PROVIDER REPONAME TAG`
 
@@ -85,13 +85,13 @@ USAGE
 ARGUMENTS
   PROVIDER  (ecr|docker) The registry provider
   REPONAME  Name of the docker repo you want to sync
-  TAG       The tag you want to start the sync with
+  TAG       The tag you want to sync
 
 OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/create-sync.ts)_
+_See code: [src/commands/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.3/src/commands/create-sync.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -126,7 +126,7 @@ OPTIONS
   -h, --help  Help command
 ```
 
-_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/pull.ts)_
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.3/src/commands/pull.ts)_
 
 ## `docmir push PROVIDER IMAGE REPOURL TAG`
 
@@ -146,7 +146,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/push.ts)_
+_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.3/src/commands/push.ts)_
 
 ## `docmir search-tags IMAGENAME [PROVIDER]`
 
@@ -164,5 +164,23 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/search-tags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/search-tags.ts)_
+_See code: [src/commands/search-tags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.3/src/commands/search-tags.ts)_
 <!-- commandsstop -->
+
+
+# Provider Setup
+
+## Docker
+
+In order to take advantage of being able to pull and push images without hitting rate limmite, its best to be logged in with a user. 
+Use the `auth` command to set the user.
+
+## ECR
+
+To use the AWS ecr provider you need to set the aws environment variables in order to authenticate.  The following env variables need to be set: 
+
+```
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_ACCOUNT_ID
+```

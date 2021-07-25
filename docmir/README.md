@@ -213,4 +213,6 @@ AWS_ACCOUNT_ID
   - 1.2.* returns all patches
 - Update search tags to find tags across multiple repositories.  (mulitple repo's with name busybox)
 - update sync functionality to sync based off limited search tag functionality
-- add providers [azure, jfrog, quay.io, private dockerhub]
+- add providers [azurecr.io, jfrog, quay.io, gcr.io, private dockerhub]
+- multiprovider support
+- ability to set provider globally

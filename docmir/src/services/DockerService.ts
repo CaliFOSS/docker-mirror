@@ -97,10 +97,10 @@ export class DockerService {
 
   public async pushImage(repository: string, imageName: string, tag: string): Promise<boolean> {
     // TODO: check if image is local first by listing all images
-    return new Promise((resolve, rejects) => {
-      this.docker.command('tag ' + imageName + ':' + tag + ' ' + repository + ':' + tag).then(data => {
+    return new Promise(async (resolve, rejects) => {
+      await this.docker.command('tag ' + imageName + ':' + tag + ' ' + repository + ':' + tag).then(async data => {
         // console.log(data)
-        this.docker.command('push ' + repository + ':' + tag).then(data => {
+        await this.docker.command('push ' + repository + ':' + tag).then(data => {
           // console.log(data)
           return resolve(true)
           console.log('Image has been uploaded')
@@ -117,27 +117,29 @@ export class DockerService {
     })
   }
 
-  public dockerLogout(): string {
-    this.docker.command('logout').then(data => {
-      return data
-    }, rejected => {
-      return 'Logout Failed.  Please re-login'
-    })
-    return 'Failure'
-  }
+  public async getAllTags(imageName: string): Promise<string[]> {
 
-  public getAllTags(imageName: string) {
-    axios.get(this.baseSearchUrl + imageName + '/tags').then(response => {
-      response.data.forEach((element: { name: any }) => {
-        console.log(element.name)
+    return new Promise((resolve, reject) =>{
+      let tags: string[] = [];
+
+      axios.get(this.baseSearchUrl + imageName + '/tags').then(response => {
+        response.data.forEach((element: { name: any }) => {
+          tags.push(element.name)
+          //console.log(element.name)
+        })
+        return resolve(tags)
+      }).catch(error => {
+        if (error.response.status === 404) {
+          return reject('The registry ' + imageName + ' was not found on docker hub.')
+
+        } else {
+          return reject(error)
+        }
       })
-    }).catch(error => {
-      if (error.response.status === 404) {
-        console.log('The registry ' + imageName + ' was not found on docker hub.')
-      } else {
-        console.log(error)
-      }
+
     })
+
+
   }
 
   public async pullImage(imageName: string, imageTag?: string): Promise<boolean> {
@@ -148,7 +150,7 @@ export class DockerService {
       pullImageCommand = 'pull ' + imageName
     }
 
-    this.docker.command(pullImageCommand).then(data => {
+    await this.docker.command(pullImageCommand).then(data => {
       // console.log(data)
       return true
     }, rejected => {

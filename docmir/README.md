@@ -12,6 +12,7 @@ A CLI application to create and sync images from dockerhub to provider of choice
 * [Usage](#usage)
 * [Commands](#commands)
 * [Provider Setup](#provider-setup)
+* [Future](#future)
 <!-- tocstop -->
 # Usage
 <!-- usage -->
@@ -20,7 +21,7 @@ $ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docmir/0.5.4 darwin-x64 node-v16.2.0
+docmir/0.6.0 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -36,6 +37,7 @@ USAGE
 * [`docmir pull [IMAGE] [TAG]`](#docmir-pull-image-tag)
 * [`docmir push PROVIDER IMAGE REPOURL TAG`](#docmir-push-provider-image-repourl-tag)
 * [`docmir search-tags IMAGENAME [PROVIDER]`](#docmir-search-tags-imagename-provider)
+* [`docmir sync [REPO] [PROVIDER]`](#docmir-sync-repo-provider)
 
 ## `docmir auth [PROVIDER]`
 
@@ -55,7 +57,7 @@ OPTIONS
   -u, --userName=userName          docker username
 ```
 
-_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.4/src/commands/auth.ts)_
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.0/src/commands/auth.ts)_
 
 ## `docmir create-repo PROVIDER REPONAME`
 
@@ -73,7 +75,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/create-repo.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.4/src/commands/create-repo.ts)_
+_See code: [src/commands/create-repo.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.0/src/commands/create-repo.ts)_
 
 ## `docmir create-sync PROVIDER REPONAME TAG`
 
@@ -92,7 +94,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.4/src/commands/create-sync.ts)_
+_See code: [src/commands/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.0/src/commands/create-sync.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -127,7 +129,7 @@ OPTIONS
   -h, --help  Help command
 ```
 
-_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.4/src/commands/pull.ts)_
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.0/src/commands/pull.ts)_
 
 ## `docmir push PROVIDER IMAGE REPOURL TAG`
 
@@ -147,7 +149,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.4/src/commands/push.ts)_
+_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.0/src/commands/push.ts)_
 
 ## `docmir search-tags IMAGENAME [PROVIDER]`
 
@@ -165,7 +167,25 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/search-tags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.4/src/commands/search-tags.ts)_
+_See code: [src/commands/search-tags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.0/src/commands/search-tags.ts)_
+
+## `docmir sync [REPO] [PROVIDER]`
+
+Syncs all tags missing in target registry. 
+
+```
+USAGE
+  $ docmir sync [REPO] [PROVIDER]
+
+OPTIONS
+  -h, --help  show CLI help
+
+DESCRIPTION
+  Note: you must create a sync first before syncing the entire repo at this point.  This is best used for when you want 
+  to keep a sync up to date
+```
+
+_See code: [src/commands/sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.0/src/commands/sync.ts)_
 <!-- commandsstop -->
 
 
@@ -185,3 +205,12 @@ AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_ACCOUNT_ID
 ```
+
+
+# Future
+
+- Update search tags functionality to specify a list of tags based on version and wild card.
+  - 1.2.* returns all patches
+- Update search tags to find tags across multiple repositories.  (mulitple repo's with name busybox)
+- update sync functionality to sync based off limited search tag functionality
+- add providers [azure, jfrog, quay.io, private dockerhub]

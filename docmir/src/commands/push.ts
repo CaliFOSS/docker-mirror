@@ -2,12 +2,10 @@ import {Command, flags} from '@oclif/command'
 import {SyncController} from '../controllers/SyncController'
 
 export default class Push extends Command {
-  static description = 'describe the command here'
+  static description = 'Push an Image with tag to provider registry'
 
   static flags = {
     help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
   }
 
   static args = [
@@ -15,7 +13,6 @@ export default class Push extends Command {
     {name: 'image', required: true},
     {name: 'repoURL', required: true},
     {name: 'tag', required: true},
-
   ]
 
   async run() {

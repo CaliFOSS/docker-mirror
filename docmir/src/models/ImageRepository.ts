@@ -29,7 +29,7 @@ export class ImageRepository {
   // @ts-ignore
   private _managedTags: Tag [];
 
-  constructor(imageRepoName: string, registryServer: string, registryProvider: Providers, created?:boolean) {
+  constructor(imageRepoName: string, registryServer: string, registryProvider: Providers, created?: boolean) {
     this._repoName = imageRepoName
     this._server = registryServer
     this._provider = registryProvider

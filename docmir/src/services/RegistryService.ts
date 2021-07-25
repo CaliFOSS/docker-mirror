@@ -12,15 +12,12 @@ export class RegistryService {
   constructor(repositories?: Repositories) {
     if (repositories) {
       this.repositories = repositories
+    } else if (this.repositories.loadState()) {
+      // console.debug(JSON.stringify(this.repositories.imageRepositories))
     } else {
-      if (this.repositories.loadState()) {
-        //console.debug(JSON.stringify(this.repositories.imageRepositories))
-      } else {
-        console.error('Data was not loaded')
-      }
+      console.error('Data was not loaded')
     }
   }
-
 
   public resetService() {
     this.repositories.deleteState()
@@ -36,9 +33,9 @@ export class RegistryService {
 
   public findRepo(imageName: string): Promise<ImageRepository> {
     return new Promise((resolve, reject) => {
-      this.repositories.getRepo(imageName).then(async (repo) => {
+      this.repositories.getRepo(imageName).then(async repo => {
         if (repo.repoName === imageName) {
-          //console.log(repo.repoName, ' ', imageName)
+          // console.log(repo.repoName, ' ', imageName)
           return resolve(repo)
         }
         return resolve(new ImageRepository('NotFound', 'NotFound', Providers.docker))

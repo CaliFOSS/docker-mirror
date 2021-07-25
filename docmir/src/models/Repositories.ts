@@ -15,7 +15,7 @@ export class Repositories {
   // stateSave overwrites entire file every time.
   private saveState() {
     const stateJson = JSON.stringify(this._imageRepositories)
-    //console.log(stateJson)
+    // console.log(stateJson)
     fs.writeFileSync(this.fileLocation, stateJson)
   }
 
@@ -34,11 +34,10 @@ export class Repositories {
 
       if (fs.existsSync(this.fileLocation)) {
         const rawState = fs.readFileSync(this.fileLocation)
-        let imageRepos = JSON.parse(rawState.toString())
+        const imageRepos = JSON.parse(rawState.toString())
         for (let i = 0; i < imageRepos.length; i++) {
-
-          let temp = new ImageRepository(imageRepos[i]._repoName, imageRepos[i]._server, imageRepos[i]._provider, imageRepos[i]._repoCreated)
-          this._imageRepositories.push(temp);
+          const temp = new ImageRepository(imageRepos[i]._repoName, imageRepos[i]._server, imageRepos[i]._provider, imageRepos[i]._repoCreated)
+          this._imageRepositories.push(temp)
         }
         return true
       }
@@ -79,16 +78,14 @@ export class Repositories {
   }
 
   public async getRepo(imageName: string): Promise<ImageRepository> {
-    //console.log('We got this image name ',  imageName)
-    //console.log(this._imageRepositories)
+    // console.log('We got this image name ',  imageName)
+    // console.log(this._imageRepositories)
     return new Promise((resolve, reject) => {
-      this._imageRepositories.forEach( async (imageRepo, index) => {
-        //console.log(imageRepo.repoName, ' with index ' + index, imageName)
+      this._imageRepositories.forEach(async (imageRepo, index) => {
+        // console.log(imageRepo.repoName, ' with index ' + index, imageName)
         if (imageRepo.repoName === imageName) {
-
           return resolve(imageRepo)
         }
-
       })
       return resolve(new ImageRepository('NotFound', 'NotFound', Providers.docker))
     })

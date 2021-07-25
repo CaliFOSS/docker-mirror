@@ -49,7 +49,7 @@ export class EcrService extends RegistryProvider {
   public async getCreds(): Promise<DockerCreds> {
     return new Promise((resolve, reject) => {
       this.credentialsValid().then(value => {
-        //console.log(value)
+        // console.log(value)
         const params = {
           registryIds: [this._accountID],
         }
@@ -117,7 +117,6 @@ export class EcrService extends RegistryProvider {
 
         return resolve(images)
       })
-
     })
   }
 

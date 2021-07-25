@@ -14,7 +14,6 @@ const testImageRepos: ImageRepository[] = [
 const repos = new Repositories(testImageRepos)
 
 describe('Registry Service', () => {
-
   fancy
   .it('Adding repo to repo model, save state and retrieve value', async () => {
     const registryService = new RegistryService()
@@ -26,7 +25,7 @@ describe('Registry Service', () => {
       expect(expected.provider).to.equal(Providers.ecr)
     }
 
-    //registryService.resetService()
+    registryService.resetService()
   })
 
   fancy
@@ -40,8 +39,6 @@ describe('Registry Service', () => {
       expect(expected.provider).to.equal(Providers.ecr)
     }
 
-    //registryService.resetService()
+    registryService.resetService()
   })
-
-
 })

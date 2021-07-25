@@ -2,7 +2,7 @@ import {Command, flags} from '@oclif/command'
 import {SyncController} from '../controllers/SyncController'
 
 export default class Auth extends Command {
-  static description = 'Working with Authentication for Dockerhub and registry'
+  static description = 'Set Docker user and password, and validate credentials with provider'
 
   static flags = {
     help: flags.help({char: 'h'}),

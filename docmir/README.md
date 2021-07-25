@@ -19,7 +19,7 @@ $ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docmir/0.5.1 darwin-x64 node-v16.2.0
+docmir/0.5.2 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -29,16 +29,16 @@ USAGE
 # Commands
 <!-- commands -->
 * [`docmir auth [PROVIDER]`](#docmir-auth-provider)
+* [`docmir create-repo PROVIDER REPONAME`](#docmir-create-repo-provider-reponame)
+* [`docmir create-sync PROVIDER REPONAME TAG`](#docmir-create-sync-provider-reponame-tag)
 * [`docmir help [COMMAND]`](#docmir-help-command)
-* [`docmir provider:create-sync PROVIDER REPONAME TAG`](#docmir-providercreate-sync-provider-reponame-tag)
 * [`docmir pull [IMAGE] [TAG]`](#docmir-pull-image-tag)
 * [`docmir push PROVIDER IMAGE REPOURL TAG`](#docmir-push-provider-image-repourl-tag)
-* [`docmir registry PROVIDER COMMAND [REPONAME]`](#docmir-registry-provider-command-reponame)
-* [`docmir searchtags [IMAGENAME] [PROVIDER] [SERVER]`](#docmir-searchtags-imagename-provider-server)
+* [`docmir search-tags IMAGENAME [PROVIDER]`](#docmir-search-tags-imagename-provider)
 
 ## `docmir auth [PROVIDER]`
 
-Working with Authentication for Dockerhub and registry
+Set Docker user and password, and validate credentials with provider
 
 ```
 USAGE
@@ -54,7 +54,44 @@ OPTIONS
   -u, --userName=userName          docker username
 ```
 
-_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/auth.ts)_
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/auth.ts)_
+
+## `docmir create-repo PROVIDER REPONAME`
+
+Create a repo for the provider
+
+```
+USAGE
+  $ docmir create-repo PROVIDER REPONAME
+
+ARGUMENTS
+  PROVIDER  (ecr|docker) The registry provider you are using
+  REPONAME  Name you want the repo to be called. By defualt syncs are created with the name of the repo
+
+OPTIONS
+  -h, --help  show CLI help
+```
+
+_See code: [src/commands/create-repo.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/create-repo.ts)_
+
+## `docmir create-sync PROVIDER REPONAME TAG`
+
+This command creates a sync with a provider.  It stores everything to local file for future syncs
+
+```
+USAGE
+  $ docmir create-sync PROVIDER REPONAME TAG
+
+ARGUMENTS
+  PROVIDER  (ecr|docker) The registry provider
+  REPONAME  Name of the docker repo you want to sync
+  TAG       The tag you want to start the sync with
+
+OPTIONS
+  -h, --help  show CLI help
+```
+
+_See code: [src/commands/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/create-sync.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -73,29 +110,9 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
-## `docmir provider:create-sync PROVIDER REPONAME TAG`
-
-describe the command here
-
-```
-USAGE
-  $ docmir provider:create-sync PROVIDER REPONAME TAG
-
-ARGUMENTS
-  PROVIDER  (ecr|docker) The registry provider
-  REPONAME  Name of the docker repo you want to sync
-  TAG       The tag you want to start the sync with
-
-OPTIONS
-  -f, --force
-  -h, --help   show CLI help
-```
-
-_See code: [src/commands/provider/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/provider/create-sync.ts)_
-
 ## `docmir pull [IMAGE] [TAG]`
 
-describe the command here
+Will pull an image from docker hub directly to local machine
 
 ```
 USAGE
@@ -103,17 +120,17 @@ USAGE
 
 ARGUMENTS
   IMAGE  Image to pull from dockerhub
-  TAG    tag to pull from dockerhub
+  TAG    Tag to pull from dockerhub.  Defaults to latest if not used
 
 OPTIONS
   -h, --help  Help command
 ```
 
-_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/pull.ts)_
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/pull.ts)_
 
 ## `docmir push PROVIDER IMAGE REPOURL TAG`
 
-describe the command here
+Push an Image with tag to provider registry
 
 ```
 USAGE
@@ -126,44 +143,26 @@ ARGUMENTS
   TAG
 
 OPTIONS
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
-_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/push.ts)_
+_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/push.ts)_
 
-## `docmir registry PROVIDER COMMAND [REPONAME]`
+## `docmir search-tags IMAGENAME [PROVIDER]`
 
-describe the command here
+Searches dockerhub for available images of the docker registry
 
 ```
 USAGE
-  $ docmir registry PROVIDER COMMAND [REPONAME]
+  $ docmir search-tags IMAGENAME [PROVIDER]
 
 ARGUMENTS
-  PROVIDER  (ecr|docker) The registry provider you are using
-  COMMAND   (create-repo|create-sync) Commands for providers
-  REPONAME
+  IMAGENAME  Image you want to get tags from
+  PROVIDER   (ecr|docker) [default: docker] The registry provider to search.
 
 OPTIONS
-  -f, --force
-  -h, --help   show CLI help
+  -h, --help  show CLI help
 ```
 
-_See code: [src/commands/registry.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/registry.ts)_
-
-## `docmir searchtags [IMAGENAME] [PROVIDER] [SERVER]`
-
-describe the command here
-
-```
-USAGE
-  $ docmir searchtags [IMAGENAME] [PROVIDER] [SERVER]
-
-OPTIONS
-  -h, --help         show CLI help
-  -l, --limit=limit  Limit the number of tags to pull
-```
-
-_See code: [src/commands/searchtags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.1/src/commands/searchtags.ts)_
+_See code: [src/commands/search-tags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.5.2/src/commands/search-tags.ts)_
 <!-- commandsstop -->

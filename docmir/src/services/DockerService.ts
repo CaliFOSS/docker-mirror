@@ -2,7 +2,7 @@ import {Docker, Options} from 'docker-cli-js'
 import * as Sinon from 'sinon'
 import axios from 'axios'
 import {Providers} from '../models/types'
-import {rejects} from "assert";
+import {rejects} from 'assert'
 
 export class DockerService {
   private _userName = ''
@@ -65,7 +65,7 @@ export class DockerService {
   // @ts-ignore
   public async dockerLoginRepo(repository: string, userName?: string, userPassword?: string): Promise<string> {
     const loginWithoutCreds = 'login ' + repository
-    //console.log(userName, userPassword)
+    // console.log(userName, userPassword)
     return new Promise((resolve, reject) => {
       if (userName && userPassword) {
         this._userName = userName
@@ -97,11 +97,11 @@ export class DockerService {
 
   public async pushImage(repository: string, imageName: string, tag: string): Promise<boolean> {
     // TODO: check if image is local first by listing all images
-    return new Promise((resolve, rejects)=>{
+    return new Promise((resolve, rejects) => {
       this.docker.command('tag ' + imageName + ':' + tag + ' ' + repository + ':' + tag).then(data => {
-        //console.log(data)
+        // console.log(data)
         this.docker.command('push ' + repository + ':' + tag).then(data => {
-          //console.log(data)
+          // console.log(data)
           return resolve(true)
           console.log('Image has been uploaded')
         }, rejected => {
@@ -114,9 +114,7 @@ export class DockerService {
         return rejects(rejected)
         console.log('There was an issue with the tagging of the image.')
       })
-
     })
-
   }
 
   public dockerLogout(): string {
@@ -151,7 +149,7 @@ export class DockerService {
     }
 
     this.docker.command(pullImageCommand).then(data => {
-      //console.log(data)
+      // console.log(data)
       return true
     }, rejected => {
       return false

@@ -3,7 +3,7 @@ import {EcrService} from '../services/EcrService'
 import {Providers} from '../models/types'
 import {RegistryService} from '../services/RegistryService'
 import cli from 'cli-ux'
-import {Prometheus} from "aws-sdk/clients/kafka";
+import {Prometheus} from 'aws-sdk/clients/kafka'
 
 // noinspection SpellCheckingInspection
 export class SyncController {
@@ -32,113 +32,107 @@ export class SyncController {
 
   public async dockerLogin(username: string, password: string, provider?: Providers, repoServer?: string): Promise<string> {
     switch (provider) {
-      case Providers.ecr:
-        console.log('call ecr login')
-        break
-      case Providers.docker:
-        return (this.dockerService.dockerLogin(username, password))
-        break
-      default:
-        return (this.dockerService.dockerLogin(username, password))
-        break
+    case Providers.ecr:
+      console.log('call ecr login')
+      break
+    case Providers.docker:
+      return (this.dockerService.dockerLogin(username, password))
+      break
+    default:
+      return (this.dockerService.dockerLogin(username, password))
+      break
     }
     return 'The provider was not found.  Please use another provider.'
   }
 
   public isLoggedIn(provider: Providers) {
     switch (provider) {
-      case Providers.ecr:
-        return this.ecrService?.credentialsValid()
-        break
-      case Providers.docker:
-        return this.dockerService.dockerLogin()
-        break
-      default:
-        return this.dockerService.dockerLogin()
-        break
+    case Providers.ecr:
+      return this.ecrService?.credentialsValid()
+      break
+    case Providers.docker:
+      return this.dockerService.dockerLogin()
+      break
+    default:
+      return this.dockerService.dockerLogin()
+      break
     }
   }
 
   public async searchTags(imageName: string, provider?: Providers): Promise<string[]> {
     return new Promise(async (response, reject)  =>  {
-
       let tags: string[] | undefined
 
       switch (provider) {
-        case Providers.ecr:
-          tags = await this.ecrService?.getTags(imageName)
-          if (tags) {
-            tags.forEach(value => {
-              console.log(value)
-            })
-            return response(tags)
-          }
-          break
-        case Providers.docker:
-          tags = await this.dockerService.getAllTags(imageName)
-          if (tags) {
-            tags.forEach(value => {
-              console.log(value)
-            })
-            return response(tags)
-          }
-          break
-        default:
-          tags = await this.dockerService.getAllTags(imageName)
-          if (tags) {
-            tags.forEach(value => {
-              console.log(value)
-            })
-            return response(tags)
-          }
-          break
+      case Providers.ecr:
+        tags = await this.ecrService?.getTags(imageName)
+        if (tags) {
+          tags.forEach(value => {
+            console.log(value)
+          })
+          return response(tags)
+        }
+        break
+      case Providers.docker:
+        tags = await this.dockerService.getAllTags(imageName)
+        if (tags) {
+          tags.forEach(value => {
+            console.log(value)
+          })
+          return response(tags)
+        }
+        break
+      default:
+        tags = await this.dockerService.getAllTags(imageName)
+        if (tags) {
+          tags.forEach(value => {
+            console.log(value)
+          })
+          return response(tags)
+        }
+        break
       }
       return reject('no tags found')
-
     })
-
   }
 
-  public async diffTags(imageName: string, provider: Providers){
+  public async diffTags(imageName: string, provider: Providers) {
+    let unsyncedTags: string[] = []
+    const dockerTags = await this.searchTags(imageName)
+    const providerTags = await this.searchTags(imageName, provider)
 
-    let unsyncedTags: string[] = [];
-    let dockerTags = await this.searchTags(imageName);
-    let providerTags = await this.searchTags(imageName, provider);
-
-    if(providerTags.length > 0){
-
+    if (providerTags.length > 0) {
       for (const tag of dockerTags) {
-        let tagFound = false;
-        for(const pTag of providerTags){
+        let tagFound = false
+        for (const pTag of providerTags) {
           if (pTag === tag) {
             console.log('Tag ' + tag + ' was found in destination repo')
-            tagFound = true;
-            break;
+            tagFound = true
+            break
           }
         }
         console.log('Tagfound: ' + tagFound)
-        if(!tagFound){
+        if (!tagFound) {
           unsyncedTags.push(tag)
-          tagFound = false;
+          tagFound = false
         }
       }
-    }else{
-      unsyncedTags = dockerTags;
+    } else {
+      unsyncedTags = dockerTags
     }
 
-    if(unsyncedTags.length > 0){
+    if (unsyncedTags.length > 0) {
       for (const tag of unsyncedTags) {
-        const index = unsyncedTags.indexOf(tag);
-        let response = await this.addRepoSync(imageName, tag, provider).catch(error => {
+        const index = unsyncedTags.indexOf(tag)
+        const response = await this.addRepoSync(imageName, tag, provider).catch(error => {
           console.error(error)
         })
-        console.log('Tag: ' + tag);
+        console.log('Tag: ' + tag)
         console.log('Response: ' + response)
       }
-    }else{
-      console.log('No tags to sync');
+    } else {
+      console.log('No tags to sync')
     }
-
   }
 
   public async pullImageFromDocker(imageName: string, imageTag?: string): Promise<string> {
@@ -146,13 +140,12 @@ export class SyncController {
       return 'Image is now local'
     }
     return 'Image pull failed'
-
   }
 
   public async pushImage(provider: Providers, imageName: string, repoURL: string, tag: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       switch (provider) {
-        case Providers.ecr:
+      case Providers.ecr:
           // TODO: check if repo exists
           // TODO: validate dockerhub login
           // TODO: Add repo to state and save
@@ -174,13 +167,13 @@ export class SyncController {
           })
           //
 
-          break
-        case Providers.docker:
-          break
-        default:
-          console.log('No provider found... please try again')
-          return resolve(false)
-          break
+        break
+      case Providers.docker:
+        break
+      default:
+        console.log('No provider found... please try again')
+        return resolve(false)
+        break
       }
     })
   }
@@ -189,12 +182,12 @@ export class SyncController {
     return new Promise(async (resolve, reject) => {
       // console.log(provider)
       switch (provider) {
-        case Providers.ecr:
-          if (await this.ecrService?.repoExists(repoName)) {
-            const arn = await this.ecrService?.getServerURI(repoName)
-            console.log('Repository already exists at ' + arn)
-            return resolve(arn)
-          }
+      case Providers.ecr:
+        if (await this.ecrService?.repoExists(repoName)) {
+          const arn = await this.ecrService?.getServerURI(repoName)
+          console.log('Repository already exists at ' + arn)
+          return resolve(arn)
+        }
           this.ecrService?.createRepoReturnUrl(repoName).then(arn => {
             console.log('Repository Created at ' + arn)
             return resolve(arn)
@@ -202,13 +195,13 @@ export class SyncController {
             return reject(error)
           })
 
-          break
-        case Providers.docker:
-          return reject("We don't support docker registry currently")
-          break
-        default:
-          return reject("No repo was created because there wasn't a properly defined provider")
-          break
+        break
+      case Providers.docker:
+        return reject("We don't support docker registry currently")
+        break
+      default:
+        return reject("No repo was created because there wasn't a properly defined provider")
+        break
       }
     })
   }
@@ -217,15 +210,14 @@ export class SyncController {
   // creates the registry repo (currently only ecr
   // authenticates, then pulls and pushes image
   public async addRepoSync(image: string, tag: string, provider: Providers): Promise<string> {
-
-    return new Promise((resolve, reject ) => {
+    return new Promise((resolve, reject) => {
       let arn = ''
 
       this.registryService.findRepo(image).then(async imageRepo => {
         const name = imageRepo.repoName
         // console.log(name, ' ', image)
-        //TODO: handle state better
-        /*if (name === image) {
+        // TODO: handle state better
+        /* if (name === image) {
           console.log('Registry is already in State with url ' + imageRepo.server)
           const cont = await cli.prompt('Do you want to continue? {y/n}')
           if (cont !== 'y') {
@@ -233,7 +225,7 @@ export class SyncController {
               process.exit(0)
             })
           }
-        }*/
+        } */
         await this.createRepository(provider, image).then(async response => {
           arn = response
           await this.registryService.addRepo(provider, image, arn, true).then(async value => {
@@ -241,7 +233,6 @@ export class SyncController {
               await this.pushImage(provider, image, arn, tag).then(response => {
                 if (response) {
                   return resolve('Repository created and image synced')
-
                 }
               }).catch(error => {
                 console.log(error)
@@ -264,9 +255,6 @@ export class SyncController {
         console.error(error)
         return reject(error)
       })
-
-
-    } )
+    })
   }
-
 }

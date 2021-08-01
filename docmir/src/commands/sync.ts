@@ -11,8 +11,8 @@ export default class Sync extends Command {
   }
 
   static args = [
-    {name: 'repo', require: true, },
-    {name: 'provider', required: true}
+    {name: 'repo', require: true},
+    {name: 'provider', required: true},
   ]
 
   async run() {
@@ -20,9 +20,5 @@ export default class Sync extends Command {
     const syncController = new SyncController()
 
     syncController.diffTags(args.repo, args.provider)
-
-
-
-
   }
 }

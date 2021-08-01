@@ -118,28 +118,22 @@ export class DockerService {
   }
 
   public async getAllTags(imageName: string): Promise<string[]> {
-
-    return new Promise((resolve, reject) =>{
-      let tags: string[] = [];
+    return new Promise((resolve, reject) => {
+      const tags: string[] = []
 
       axios.get(this.baseSearchUrl + imageName + '/tags').then(response => {
         response.data.forEach((element: { name: any }) => {
           tags.push(element.name)
-          //console.log(element.name)
+          // console.log(element.name)
         })
         return resolve(tags)
       }).catch(error => {
         if (error.response.status === 404) {
           return reject('The registry ' + imageName + ' was not found on docker hub.')
-
-        } else {
-          return reject(error)
         }
+        return reject(error)
       })
-
     })
-
-
   }
 
   public async pullImage(imageName: string, imageTag?: string): Promise<boolean> {

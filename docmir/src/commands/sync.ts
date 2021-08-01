@@ -11,7 +11,7 @@ export default class Sync extends Command {
   }
 
   static args = [
-    {name: 'repo', require: true},
+    {name: 'repo', required: true},
     {name: 'provider', required: true},
   ]
 

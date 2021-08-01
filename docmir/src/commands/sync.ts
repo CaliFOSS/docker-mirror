@@ -12,7 +12,7 @@ export default class Sync extends Command {
 
   static args = [
     {name: 'repo', require: true, },
-    {name: 'provider'}
+    {name: 'provider', required: true}
   ]
 
   async run() {

@@ -24,7 +24,7 @@ export default class Auth extends Command {
     if (flags.userPassword && flags.userName) {
       this.log(await syncController.dockerLogin(flags.userName, flags.userPassword))
     } else {
-      this.log(await syncController.isLoggedIn(args.provider))
+      await syncController.isLoggedIn(args.provider)
     }
   }
 }

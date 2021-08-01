@@ -21,7 +21,7 @@ $ npm install -g docmir
 $ docmir COMMAND
 running command...
 $ docmir (-v|--version|version)
-docmir/0.6.3 darwin-x64 node-v16.2.0
+docmir/0.6.4 darwin-x64 node-v16.2.0
 $ docmir --help [COMMAND]
 USAGE
   $ docmir COMMAND
@@ -57,7 +57,7 @@ OPTIONS
   -u, --userName=userName          docker username
 ```
 
-_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.3/src/commands/auth.ts)_
+_See code: [src/commands/auth.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.4/src/commands/auth.ts)_
 
 ## `docmir create-repo PROVIDER REPONAME`
 
@@ -75,7 +75,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/create-repo.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.3/src/commands/create-repo.ts)_
+_See code: [src/commands/create-repo.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.4/src/commands/create-repo.ts)_
 
 ## `docmir create-sync PROVIDER REPONAME TAG`
 
@@ -94,7 +94,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.3/src/commands/create-sync.ts)_
+_See code: [src/commands/create-sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.4/src/commands/create-sync.ts)_
 
 ## `docmir help [COMMAND]`
 
@@ -129,7 +129,7 @@ OPTIONS
   -h, --help  Help command
 ```
 
-_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.3/src/commands/pull.ts)_
+_See code: [src/commands/pull.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.4/src/commands/pull.ts)_
 
 ## `docmir push PROVIDER IMAGE REPOURL TAG`
 
@@ -149,7 +149,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.3/src/commands/push.ts)_
+_See code: [src/commands/push.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.4/src/commands/push.ts)_
 
 ## `docmir search-tags IMAGENAME [PROVIDER]`
 
@@ -167,7 +167,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/search-tags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.3/src/commands/search-tags.ts)_
+_See code: [src/commands/search-tags.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.4/src/commands/search-tags.ts)_
 
 ## `docmir sync REPO PROVIDER`
 
@@ -185,7 +185,7 @@ DESCRIPTION
   to keep a sync up to date
 ```
 
-_See code: [src/commands/sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.3/src/commands/sync.ts)_
+_See code: [src/commands/sync.ts](https://github.com/CaliFOSS/docker-mirror/blob/v0.6.4/src/commands/sync.ts)_
 <!-- commandsstop -->
 
 

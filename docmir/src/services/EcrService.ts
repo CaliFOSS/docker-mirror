@@ -34,9 +34,10 @@ export class EcrService extends RegistryProvider {
         this.sts.getCallerIdentity({}, (err, data) => {
           if (err) {
             console.log(err, err.stack)
+            console.info('Credentials not valid.  Please include new environment variables.')
             return reject('Credentials not valid.  Please include new environment variables.')
           }  // an error occurred
-
+          console.info('ECR credentials are valid!')
           resolve('Credentials are valid!')
         })
       } catch (error) {

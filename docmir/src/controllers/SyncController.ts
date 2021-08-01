@@ -21,7 +21,7 @@ export class SyncController {
 
   constructor() {
     if (this.awsAccountId === '' || this.awsAccessKeyID === '' || this.awsSecreteAccessKey === '') {
-      console.log('Warning:  AWS credentials are not set properly, working with ecr is not guaranteed')
+      console.log('Warning:  AWS credentials are not set properly, working with ecr is not possible')
     } else {
       this.ecrService = new EcrService(this.awsAccountId, this.awsAccessKeyID, this.awsSecreteAccessKey)
     }
